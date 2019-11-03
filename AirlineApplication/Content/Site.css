@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-size: 17px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -22,3 +23,35 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    font-size: 17px;
+    height:44px;
+    border-radius: 10px;
+}
+
+.btn {
+    font-size: 17px;
+    margin-top:6px;
+    padding: 7px 22px;
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    border-color: #0077d5;
+    -webkit-box-shadow: none; 
+    box-shadow: none; 
+}
+
+ .actions {
+    display: none;
+}
+
+tr:hover .actions {
+    display: block;
+}
+

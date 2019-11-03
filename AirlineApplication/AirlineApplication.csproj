@@ -49,12 +49,21 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -173,17 +182,71 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Configurations\AirportConfiguration.cs" />
+    <Compile Include="Configurations\CrewConfiguration.cs" />
+    <Compile Include="Configurations\CrewMemberConfiguration.cs" />
+    <Compile Include="Configurations\FlightConfiguration.cs" />
+    <Compile Include="Configurations\FlightStatusConfiguration.cs" />
+    <Compile Include="Configurations\ProfessionConfiguration.cs" />
+    <Compile Include="Configurations\RouteConfiguration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\FlightsController.cs" />
+    <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910310826160_InitialModel.cs" />
+    <Compile Include="Migrations\201910310826160_InitialModel.Designer.cs">
+      <DependentUpon>201910310826160_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910310834229_ChangeFlightStatusTable.cs" />
+    <Compile Include="Migrations\201910310834229_ChangeFlightStatusTable.Designer.cs">
+      <DependentUpon>201910310834229_ChangeFlightStatusTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910310835007_PopulateFlightStatusTable.cs" />
+    <Compile Include="Migrations\201910310835007_PopulateFlightStatusTable.Designer.cs">
+      <DependentUpon>201910310835007_PopulateFlightStatusTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910310840037_PopulateProfessionsTable.cs" />
+    <Compile Include="Migrations\201910310840037_PopulateProfessionsTable.Designer.cs">
+      <DependentUpon>201910310840037_PopulateProfessionsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910310853096_ChangeAirportsTable.cs" />
+    <Compile Include="Migrations\201910310853096_ChangeAirportsTable.Designer.cs">
+      <DependentUpon>201910310853096_ChangeAirportsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910310853260_PopulateAirportsTable.cs" />
+    <Compile Include="Migrations\201910310853260_PopulateAirportsTable.Designer.cs">
+      <DependentUpon>201910310853260_PopulateAirportsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911021020485_DELETEFROMFlights.cs" />
+    <Compile Include="Migrations\201911021020485_DELETEFROMFlights.Designer.cs">
+      <DependentUpon>201911021020485_DELETEFROMFlights.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911021834591_AddIsDeletedToFlight.cs" />
+    <Compile Include="Migrations\201911021834591_AddIsDeletedToFlight.Designer.cs">
+      <DependentUpon>201911021834591_AddIsDeletedToFlight.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Airport.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Crew.cs" />
+    <Compile Include="Models\CrewMember.cs" />
+    <Compile Include="Models\Flight.cs" />
+    <Compile Include="Models\FlightStatus.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Profession.cs" />
+    <Compile Include="Models\Route.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\FlightViewModel.cs" />
+    <Compile Include="ViewModels\FutureDate.cs" />
+    <Compile Include="ViewModels\ValidTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -207,7 +270,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -241,6 +306,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Flight\ShowAllFlights.cshtml" />
+    <Content Include="Views\Flight\FlightForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -257,6 +324,32 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201910310826160_InitialModel.resx">
+      <DependentUpon>201910310826160_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910310834229_ChangeFlightStatusTable.resx">
+      <DependentUpon>201910310834229_ChangeFlightStatusTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910310835007_PopulateFlightStatusTable.resx">
+      <DependentUpon>201910310835007_PopulateFlightStatusTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910310840037_PopulateProfessionsTable.resx">
+      <DependentUpon>201910310840037_PopulateProfessionsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910310853096_ChangeAirportsTable.resx">
+      <DependentUpon>201910310853096_ChangeAirportsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910310853260_PopulateAirportsTable.resx">
+      <DependentUpon>201910310853260_PopulateAirportsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911021020485_DELETEFROMFlights.resx">
+      <DependentUpon>201911021020485_DELETEFROMFlights.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911021834591_AddIsDeletedToFlight.resx">
+      <DependentUpon>201911021834591_AddIsDeletedToFlight.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
