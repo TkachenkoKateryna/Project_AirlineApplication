@@ -188,10 +188,12 @@
     <Compile Include="Configurations\CrewMemberConfiguration.cs" />
     <Compile Include="Configurations\FlightConfiguration.cs" />
     <Compile Include="Configurations\FlightStatusConfiguration.cs" />
+    <Compile Include="Configurations\NotificationConfiguration.cs" />
     <Compile Include="Configurations\ProfessionConfiguration.cs" />
     <Compile Include="Configurations\RouteConfiguration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\FlightsController.cs" />
+    <Compile Include="Controllers\DispatcherController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -230,6 +232,10 @@
     <Compile Include="Migrations\201911021834591_AddIsDeletedToFlight.Designer.cs">
       <DependentUpon>201911021834591_AddIsDeletedToFlight.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911031525444_AddNotificationEntity.cs" />
+    <Compile Include="Migrations\201911031525444_AddNotificationEntity.Designer.cs">
+      <DependentUpon>201911031525444_AddNotificationEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Airport.cs" />
@@ -240,15 +246,20 @@
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Models\FlightStatus.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\Profession.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CrewsViewModel.cs" />
+    <Compile Include="ViewModels\CrewViewModel.cs" />
     <Compile Include="ViewModels\FlightViewModel.cs" />
     <Compile Include="ViewModels\FutureDate.cs" />
     <Compile Include="ViewModels\ValidTime.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\bootbox.all.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -308,9 +319,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Flight\ShowAllFlights.cshtml" />
     <Content Include="Views\Flight\FlightForm.cshtml" />
+    <Content Include="Views\Dispatcher\CrewForm.cshtml" />
+    <Content Include="Views\Dispatcher\ShowAllCrews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -349,6 +363,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911021834591_AddIsDeletedToFlight.resx">
       <DependentUpon>201911021834591_AddIsDeletedToFlight.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911031525444_AddNotificationEntity.resx">
+      <DependentUpon>201911031525444_AddNotificationEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

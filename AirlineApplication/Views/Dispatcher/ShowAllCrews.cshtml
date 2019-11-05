@@ -1,0 +1,40 @@
+﻿@model IEnumerable<AirlineApplication.ViewModels.CrewsViewModel>
+
+@{
+    ViewBag.Title = "ShowAllCrews";
+}
+
+<h2>ShowAllCrews</h2>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Flight Id</th>
+            <th scope="col">Flight Code</th>
+            <th scope="col">Captain</th>
+            <th scope="col">First Pilot</th>
+            <th scope="col">Navigator</th>
+            <th scope="col">Radio Operator</th>
+            <th scope="col">Main Flight Attendant</th>
+            <th scope="col">Flight Attendant</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var crew in Model)
+        {
+        <tr>
+            <td>@crew.CrewId</td>
+            <td>@crew.FlightCode</td>
+            <td>@crew.Captain</td>
+            <td>@crew.FirstPilot</td>
+            <td>@crew.Navigator</td>
+            <td>@crew.RadioOperator</td>
+            <td>@crew.MainFlightAttendant</td>
+            <td>@crew.FligthAttendant</td>
+            <td class="actions">
+                <a href="@Url.Action("UpdateCrew", "Dispatcher", new { id = crew.CrewId})">Edit</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

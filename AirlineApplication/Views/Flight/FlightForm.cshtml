@@ -1,5 +1,5 @@
 ﻿@model AirlineApplication.ViewModels.FlightViewModel
-    @using System.Data.Entity;
+@using System.Data.Entity;
 @{
     ViewBag.Title = Model.Heading;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,12 +19,12 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Departing)
-        @Html.DropDownListFor(m => m.Departing, new SelectList(Model.Airports, "AirportId", "Name", "City"), "", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Departing, new SelectList(Model.Airports, "AirportId", "Name", "City"), "", new { @class = "form-control", id = "departure" })
         @Html.ValidationMessageFor(m => m.Departing)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Landing)
-        @Html.DropDownListFor(m => m.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "", new { @class = "form-control", id = "landing" })
         @Html.ValidationMessageFor(m => m.Landing)
     </div>
     <div class="form-group">
@@ -48,4 +48,14 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $("#departure").change(function () {
+                var val = $("#departure").val();
+                $("#landing").children('option').show();
+                $('#landing option[value=' + val + ']').hide();
+            })
+        });
+    </script>
 }
+

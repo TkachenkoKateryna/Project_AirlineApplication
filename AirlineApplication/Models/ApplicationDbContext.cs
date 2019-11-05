@@ -13,6 +13,7 @@ namespace AirlineApplication.Models
         public DbSet<FlightStatus> FlightStatuses { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Crew> Crew { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

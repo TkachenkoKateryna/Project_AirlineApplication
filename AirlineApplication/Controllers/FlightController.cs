@@ -19,7 +19,8 @@ namespace AirlineApplication.Controllers
 
         public ActionResult ShowAllFlights()
         {
-            var flights = _context.Flights.Include(st => st.FlightStatus)
+            var flights = _context.Flights.Where(f => f.IsDeleted != true)
+                                          .Include(st => st.FlightStatus)
                                           .Include(m => m.CrewMembers.Select(y => y.CrewMember.Profession))
                                           .Include(a => a.Airports).ToList();
             return View(flights);

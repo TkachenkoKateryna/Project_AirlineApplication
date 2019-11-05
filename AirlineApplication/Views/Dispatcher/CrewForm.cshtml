@@ -1,0 +1,47 @@
+﻿@model AirlineApplication.ViewModels.CrewViewModel
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+@using (Html.BeginForm("UpdateCrew", "Dispatcher"))
+{
+    <p class="alert alert-info">All fireld are <strong>required</strong>.</p>
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.FlightId)
+    <div class="form-group">
+        @Html.LabelFor(m => m.Captain)
+        @Html.DropDownListFor(m => m.Captain, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 1 && !(m.Flights.Any(f => f.Flight.Date == Model.Date))), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Captain)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstPilot)
+        @Html.DropDownListFor(m => m.FirstPilot, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 2), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstPilot)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Navigator)
+        @Html.DropDownListFor(m => m.Navigator, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 3), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Navigator)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.RadioOperator)
+        @Html.DropDownListFor(m => m.RadioOperator, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 4), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RadioOperator)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MainFlightAttendant)
+        @Html.DropDownListFor(m => m.MainFlightAttendant, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 5), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MainFlightAttendant)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FligthAttendant)
+        @Html.DropDownListFor(m => m.FligthAttendant, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 6), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FligthAttendant)
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+}
+
+
