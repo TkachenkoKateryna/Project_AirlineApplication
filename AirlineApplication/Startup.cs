@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
-using AirlineApplication.Models;
+using AirlineApplication.Core.Models;
+using AirlineApplication.Persistence;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;

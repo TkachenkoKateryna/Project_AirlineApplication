@@ -1,4 +1,4 @@
-﻿@model AirlineApplication.ViewModels.CrewViewModel
+﻿@model AirlineApplication.Core.ViewModels.CrewViewModel
 
 @{
     ViewBag.Title = "View";
@@ -6,14 +6,15 @@
 
 <h2>View</h2>
 
-@using (Html.BeginForm("UpdateCrew", "Dispatcher"))
+@using (Html.BeginForm(Model.Action, "Dispatcher"))
 {
     <p class="alert alert-info">All fireld are <strong>required</strong>.</p>
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.FlightId)
+    @Html.HiddenFor(m => m.FlightId);
+    @Html.TextBoxFor(m=>m.FlightCode, new { @value = Model.FlightCode, @readonly = true})
     <div class="form-group">
         @Html.LabelFor(m => m.Captain)
-        @Html.DropDownListFor(m => m.Captain, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 1 && !(m.Flights.Any(f => f.Flight.Date == Model.Date))), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Captain, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 1), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Captain)
     </div>
     <div class="form-group">

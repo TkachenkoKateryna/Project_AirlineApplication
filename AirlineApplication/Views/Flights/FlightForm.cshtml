@@ -1,0 +1,60 @@
+﻿@model AirlineApplication.Core.ViewModels.FlightViewModel
+@using System.Data.Entity;
+@{
+    ViewBag.Title = Model.Heading;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Heading</h2>
+
+@using (Html.BeginForm(Model.Action, "Flight"))
+{
+    <p class="alert alert-info">All fireld are <strong>required</strong>.</p>
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.FlightId)
+    <div class="form-group">
+        @Html.LabelFor(m => m.Code)
+        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(m => m.Code)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Departing)
+        @Html.DropDownListFor(m => m.Departing, new SelectList(Model.Airports, "AirportId", "Name", "City"), "", new { @class = "form-control", id = "departure" })
+        @Html.ValidationMessageFor(m => m.Departing)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Landing)
+        @Html.DropDownListFor(m => m.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "", new { @class = "form-control", id = "landing" })
+        @Html.ValidationMessageFor(m => m.Landing)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.StatusId)
+        @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.Statuses, "StatusId", "Value", "Desctiption"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StatusId)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Date)
+        @Html.TextBoxFor(m => m.Date, new { @class = "form-control", placeholder = "20/07/2000" })
+        @Html.ValidationMessageFor(m => m.Date)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Time)
+        @Html.TextBoxFor(m => m.Time, new { @class = "form-control", placeholder = "12:30" })
+        @Html.ValidationMessageFor(m => m.Time)
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $("#departure").change(function () {
+                var val = $("#departure").val();
+                $("#landing").children('option').show();
+                $('#landing option[value=' + val + ']').hide();
+            })
+        });
+    </script>
+}
+

@@ -10,7 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using AirlineApplication.Models;
+using AirlineApplication.Core.Models;
+using AirlineApplication.Persistence;
 
 namespace AirlineApplication
 {
@@ -85,6 +86,11 @@ namespace AirlineApplication
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+
+        internal Task CreateAsync(ApplicationUser user, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 

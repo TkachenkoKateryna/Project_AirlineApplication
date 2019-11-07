@@ -1,0 +1,49 @@
+﻿@model  AirlineApplication.Core.ViewModels.FlightsViewModel
+
+@{
+    ViewBag.Title = Model.Heading;
+}
+
+<h1>@Model.Heading</h1>
+
+@using (Html.BeginForm("Search", "Flight"))
+{
+    <div class="form-group">
+        <div id="searchFlights" class="input-group" style="width:300px">
+            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control" })
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
+        </div>
+    </div>
+}
+
+<table id="ex" class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Status</th>
+            <th scope="col">Departing</th>
+            <th scope="col">Landing</th>
+        </tr>
+    </thead>
+    <tbody class="searchtable">
+        @foreach (var flight in Model.Flights)
+        {
+            <tr>
+                <td>@flight.Code</td>
+                <td>@flight.Date.Date</td>
+                <td>@flight.Date.TimeOfDay</td>
+                <td>@flight.FlightStatus.Value</td>
+                @foreach (var ar in @flight.Airports)
+                {
+                    <td>@ar.Airport.Name</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+

@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "ShowMembers";
+}
+
+<h2>Crew members</h2>
+
+<table id="members" class="table table-bordered table-hover">
+<thead class="thead-dark">
+    <tr>
+        <th>Full name</th>
+        <th>Profession</th>
+        <th>Delete</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#members").DataTable({
+                ajax: {
+                    url: "/api/crewmembers",
+                    dataSrc: "",
+                },
+                columns: [
+                    {
+                        data: "fullName",
+                        render: function (data, type, member) {
+                            return "<a href='/crewmembers/editmember/" + member.crewMemberId + "'>" + member.fullName + "</a>"
+                        }
+                    },
+                    {
+                        data: "profession.name"
+                    },
+                    {
+                        data: "crewMemberId",
+                        render: function (data) {
+                            return "<a href='#' class='js-delete-member' data-member-id=" + data + ">Delete</a>";
+                        }
+                    },
+                ]
+            });
+
+            $("#members").on("click", ".js-delete-member", function (e) {
+                var link = $(e.target);
+                bootbox.dialog({
+                    title: "Confirm",
+                    message: "<p>Are you sure you want delete this member</p>",
+                    size: 'large',
+                    buttons: {
+                        no: {
+                            label: "No",
+                            className: 'btn-default',
+                            callback: function () {
+                                bootbox.hideAll();
+                            }
+                        },
+                        yes: {
+                            label: "Yes",
+                            className: 'btn-danger',
+                            callback: function () {
+                                $.ajax({
+                                    url: `/api/crewmembers/${link.attr('data-member-id')}`,
+                                    method: "DELETE"
+                                })
+                                    .done(function () {
+                                        link.parents("tr").fadeOut(function () {
+                                            $(this).remove();
+                                        });
+                                    })
+                                    .fail(function (xhr, status, error) {
+                                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
+                                    });
+                            }
+                        },
+                    }
+                });
+            });
+        });
+    </script>
+}

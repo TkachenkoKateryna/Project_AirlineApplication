@@ -22,8 +22,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("ShowFlight", "ShowAllFlights", "Flight")</li>
+                    <li>@Html.ActionLink("Flights", "ShowFlights", "Flights")</li>tio
+                    <li>@Html.ActionLink("sss", "ShowAllFlights", "Flight")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -37,8 +37,8 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @*references to bundles*@ 
+    @Scripts.Render("~/bundles/lib")
     @RenderSection("scripts", required: false)
 </body>
 </html>

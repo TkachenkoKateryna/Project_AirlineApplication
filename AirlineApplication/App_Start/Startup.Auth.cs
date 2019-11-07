@@ -5,7 +5,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using AirlineApplication.Models;
+using AirlineApplication.Core.Models;
+using AirlineApplication.Persistence;
 
 namespace AirlineApplication
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity.ModelConfiguration;
-using AirlineApplication.Models;
+using AirlineApplication.Core.Models;
 
 namespace AirlineApplication.Configurations
 {

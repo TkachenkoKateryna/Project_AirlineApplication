@@ -4,94 +4,82 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Web.Mvc;
-using AirlineApplication.ViewModels;
-using AirlineApplication.Models;
+using AirlineApplication.Persistence;
+using AirlineApplication.Core.Models;
+using AirlineApplication.Core.ViewModels;
+using AirlineApplication.Core.Services;
 
 
 namespace AirlineApplication.Controllers
 {
+    [Authorize(Roles = "RoleName.Admin,RoleName.Dispatcher")]
     public class DispatcherController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ICrewService _crewService;
+        private readonly IFlightService _flightService;
 
-        public DispatcherController()
+        public DispatcherController(ICrewService crewService, IFlightService flightService)
         {
-            _context = new ApplicationDbContext();
+            _crewService = crewService;
+            _flightService = flightService;
         }
 
-        public ActionResult ShowAllCrews()
+        public ActionResult ShowCrews()
         {
-            List<CrewsViewModel> list = new List<CrewsViewModel>();
-
-            var flights = _context.Flights.ToList();
-
-            foreach (var crew in flights)
-            {
-                var model = new CrewsViewModel();
-
-                model.CrewId = crew.FlightId;
-                model.FlightCode = crew.Code;
-                foreach (var cr in crew.CrewMembers)
-                {
-                    switch (cr.CrewMember.ProfessionId)
-                    {
-                        case 1:
-                            model.Captain = cr.CrewMember.FullName;
-                            break;
-                        case 2:
-                            model.FirstPilot = cr.CrewMember.FullName;
-                            break;
-                        case 3:
-                            model.Navigator = cr.CrewMember.FullName;
-                            break;
-                        case 4:
-                            model.RadioOperator = cr.CrewMember.FullName;
-                            break;
-                        case 5:
-                            model.MainFlightAttendant = cr.CrewMember.FullName;
-                            break;
-                        case 6:
-                            model.FligthAttendant = cr.CrewMember.FullName;
-                            break;
-                    }
-                }
-                list.Add(model);
-            }
-            return View(list);
+            return View(_crewService.GetCrews());
         }
 
-        public ActionResult CreateCrew()
+        public ActionResult CreateCrew(int id, string code)
         {
             var viewModel = new CrewViewModel
             {
-                CrewMembers = _context.CrewMembers.ToList(),
-                Heading = "Add a flight"
+                FlightId = id,
+                FlightCode = code,
+                CrewMembers = _crewService.GetCrewMembers()
             };
 
             return View("CrewForm", viewModel);
         }
 
-        [Authorize]
-        public ActionResult UpdateCrew(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCrew(CrewViewModel viewModel)
         {
-            var flight = _context.Flights.SingleOrDefault(f => f.FlightId == id);
+            if (!ModelState.IsValid)
+            {
+                viewModel.CrewMembers = _crewService.GetCrewMembers();
+                return View("CrewForm", viewModel);
+            }
+            _crewService.CreateCrew(viewModel);
 
-            var viewModel = new CrewViewModel();
+            return RedirectToAction("ShowCrews", "Dispatcher");
+        }
 
-            viewModel.FlightId = flight.FlightId;
-            viewModel.Date = flight.Date;
-            viewModel.FlightCode = flight.Code;
-            viewModel.Captain = flight.CrewMembers.SingleOrDefault(f => f.CrewMember.ProfessionId == 1).CrewMemberId;
-            viewModel.FirstPilot = flight.CrewMembers.SingleOrDefault(f => f.CrewMember.ProfessionId == 2).CrewMemberId;
-            viewModel.Navigator = flight.CrewMembers.SingleOrDefault(f => f.CrewMember.ProfessionId == 3).CrewMemberId;
-            viewModel.RadioOperator = flight.CrewMembers.SingleOrDefault(f => f.CrewMember.ProfessionId == 4).CrewMemberId;
-            viewModel.MainFlightAttendant = flight.CrewMembers.SingleOrDefault(f => f.CrewMember.ProfessionId == 5).CrewMemberId;
-            viewModel.FligthAttendant = flight.CrewMembers.SingleOrDefault(f => f.CrewMember.ProfessionId == 5).CrewMemberId;
-            viewModel.CrewMembers = _context.CrewMembers.ToList();
-            viewModel.Heading = "Edit a Crew";
+        public ActionResult UpdateCrew(int id)
+        { 
+            var viewModel = new CrewViewModel()
+            {
+                CrewMembers = _crewService.GetCrewMembers()
+            };
 
+           viewModel = _crewService.FormCrew(id, viewModel);
 
             return View("CrewForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateCrew(CrewViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.CrewMembers = _crewService.GetCrewMembers();
+                return View("CrewForm", viewModel);
+            }
+
+            _crewService.UpdateCrew(viewModel);
+
+            return RedirectToAction("ShowCrews", "Dispatcher");
         }
     }
 }
