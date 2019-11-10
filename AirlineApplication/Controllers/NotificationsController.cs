@@ -37,7 +37,6 @@ namespace AirlineApplication.Controllers
                 notifications = _notifService.GetAllCompletedNotifications().ToList();
             }
 ;
-
             return View("ShowNotifications", notifications);
         }
 

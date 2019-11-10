@@ -22,7 +22,7 @@ namespace AirlineApplication.Persistence.Services
         public IEnumerable<CrewMember> GetCrewMembers()
         {
             return _unitOfWork.CrewMembers.GetAllCrewMembers()
-                .Where(m => m.isNotWorking == false);
+                .Where(m => m.isNotWorking != true);
         }
 
         public IEnumerable<CrewMember> GetFreeCrewMembers(int id, string date)
@@ -31,6 +31,26 @@ namespace AirlineApplication.Persistence.Services
                 .Where(m => m.isNotWorking == false)
                 .Where(m => !m.Flights.Any(fl => fl.Flight.Date.ToString("dd/MM/yyyy") == date)
                 || m.Flights.Any(f => f.FlightId == id));
+        }
+
+        public IEnumerable<CrewsViewModel> Sort(IEnumerable<CrewsViewModel> crews, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    crews = crews.OrderByDescending(s => s.FlightCode);
+                    break;
+                case "Date":
+                    crews = crews.OrderBy(s => s.Date);
+                    break;
+                case "date_desc":
+                    crews = crews.OrderByDescending(s => s.Date);
+                    break;
+                default:
+                    crews = crews.OrderBy(s => s.FlightCode);
+                    break;
+            }
+            return crews;
         }
 
         public void CreateCrew(CrewViewModel viewModel)

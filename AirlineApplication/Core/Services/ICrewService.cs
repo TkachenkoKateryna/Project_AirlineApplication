@@ -21,5 +21,7 @@ namespace AirlineApplication.Core.Services
         CrewViewModel FormCrew(int id, CrewViewModel viewModel);
 
         void UpdateCrew(CrewViewModel viewModel);
+
+        IEnumerable<CrewsViewModel> Sort(IEnumerable<CrewsViewModel> crews, string sortOrder);
     }
 }

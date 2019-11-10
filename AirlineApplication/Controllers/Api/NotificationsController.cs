@@ -12,6 +12,7 @@ using AirlineApplication.Core.DTOs;
 
 namespace AirlineApplication.Controllers.Api
 {
+    [Authorize(Roles ="Admin,Dipatcher")]
     public class NotificationsController : ApiController
     {
         private readonly INotificationService _notifService;

@@ -110,7 +110,7 @@ var MembersController = function () {
                     }
                 },
                 {
-                    data: "profession.name"
+                    data: "profession.name",
                 },
                 {
                     data: "crewMemberId",

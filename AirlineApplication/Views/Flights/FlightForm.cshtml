@@ -12,23 +12,26 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.FlightId)
     <div class="form-group">
-        @Html.LabelFor(m => m.Code)
-        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.LabelFor(m => m.Code, "Flight Code")
+        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", autofocus = "autofocus", autocomplete = "off" })
         @Html.ValidationMessageFor(m => m.Code)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Departing)
-        @Html.DropDownListFor(m => m.Departing, new SelectList(Model.Airports, "AirportId", "Name", "City"), "", new { @class = "form-control", id = "departure" })
+        @Html.LabelFor(m => m.Departing, "Departure")
+        @Html.DropDownListFor(m => m.Departing, new SelectList(Model.Airports, "AirportId", "Name", "City"), "",
+                                                            new { @class = "form-control", id = "departure" })
         @Html.ValidationMessageFor(m => m.Departing)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Landing)
-        @Html.DropDownListFor(m => m.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "", new { @class = "form-control", id = "landing" })
+        @Html.DropDownListFor(m => m.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "",  
+                                                            new { @class = "form-control", id = "landing" })
         @Html.ValidationMessageFor(m => m.Landing)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.StatusId)
-        @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.Statuses, "StatusId", "Value", "Desctiption"), "", new { @class = "form-control" })
+        @Html.LabelFor(m => m.StatusId, "Flight Status")
+        @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.Statuses, "StatusId", "Value", "Desctiption"), "", 
+                                                            new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.StatusId)
     </div>
     <div>

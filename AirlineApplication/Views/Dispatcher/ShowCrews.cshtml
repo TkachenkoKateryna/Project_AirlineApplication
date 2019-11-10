@@ -9,8 +9,8 @@
 <table  id="crews" class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">Flight Code</th>
-            <th scope="col">Date</th>
+            <th scope="col">@Html.ActionLink("Flight Code", "ShowCrews", new { sortOrder = ViewBag.NameSortParm })</th>
+            <th scope="col"> @Html.ActionLink("Date", "ShowCrews", new { sortOrder = ViewBag.DateSortParm })</th>
             <th scope="col">Captain</th>
             <th scope="col">First Pilot</th>
             <th scope="col">Navigator</th>

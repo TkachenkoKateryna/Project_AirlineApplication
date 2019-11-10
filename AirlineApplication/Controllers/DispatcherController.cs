@@ -22,9 +22,14 @@ namespace AirlineApplication.Controllers
             _crewService = crewService;
         }
 
-        public ActionResult ShowCrews()
+        public ActionResult ShowCrews(string sortOrder)
         {
-            return View(_crewService.GetCrews());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            var crews = _crewService.GetCrews();
+
+            return View(_crewService.Sort(crews,sortOrder));
         }
 
         public ActionResult CreateCrew(int id, string code,string date)
@@ -78,6 +83,15 @@ namespace AirlineApplication.Controllers
             _crewService.UpdateCrew(viewModel);
 
             return RedirectToAction("ShowCrews", "Dispatcher");
+        }
+
+        public ActionResult Sort(string sortOrder)
+        {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var crews = _crewService.GetCrews();
+          
+            return RedirectToAction("");
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 60px;
     font-size: 17px;
-    min-height: 100vh;
     position: relative;
-    margin: 0;
+    height:100%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -106,9 +105,10 @@ h6,
 }
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    width:100%;
+    width: 100%;
+    height:60px;
     background-color: #7DC9E7;
 }
 
@@ -208,4 +208,8 @@ footer {
     position:absolute;
     top: 0;
     left: 90px;
+}
+
+#crewMemberForm {
+    background: url('https://images.unsplash.com/photo-1537820839152-7e0df898c5a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')no-repeat center center fixed;
 }

@@ -27,7 +27,7 @@ namespace AirlineApplication.Persistence.Repositories
         public Flight GetFlight(int id)
         {
             return _context.Flights.Include(st => st.FlightStatus)
-                 .Include(m => m.CrewMembers.Select(y => y.CrewMember))
+                 .Include(m => m.CrewMembers.Select(y => y.CrewMember.Profession))
                  .Include(a => a.Airports)
                  .SingleOrDefault(f => f.FlightId == id);
         }
@@ -53,6 +53,8 @@ namespace AirlineApplication.Persistence.Repositories
         public IEnumerable<Crew> FindCrew(int flightId)
         {
             return _context.Crew.Where(r => r.FlightId == flightId)
+                .Include(cr => cr.CrewMember)
+                .Include(cr=>cr.Flight)
                 .ToList();
         }
 

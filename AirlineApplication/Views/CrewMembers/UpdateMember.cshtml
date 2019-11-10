@@ -13,7 +13,7 @@
         </div>
         <div>
             @Html.Label("Choose profession")
-            <select class="form-control" id="professionDropdown" name="professionDropdown"></select>
+            <select class="form-control" id="professionDropdown" name="professionDropdown" disabled></select>
         </div>
         <input type='button' id="submit" class="btn btn-warning" value='Submit' />
     </form>
@@ -81,20 +81,19 @@
                  
                     $("#name").val("@Model.FullName");
                     $("#professionDropdown").html(s);
-                    $("#professionDropdown").get(0).selectedIndex = @Model.ProfessionId;
+                    $("#professionDropdown").get(0).selectedIndex = @Model.ProfessionId-1;
                 }
             });
 
             $('#submit').on("click",function () {
                 var name = $("#name").val();
-                var profId = $("#professionDropdown").val();
                 $.ajax({
                     type: "PUT",
                     url: "/api/crewmembers/" + @Model.CrewMemberId,
                     data: {
                         'crewMemberId': @Model.CrewMemberId,
                         'fullName': name,
-                        'professionId': profId
+                        'professionId': @Model.ProfessionId
                     },
                     success: function () {
                         location.href = "http://localhost:57475/CrewMembers/ShowMembers"

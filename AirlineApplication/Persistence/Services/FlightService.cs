@@ -120,9 +120,39 @@ namespace AirlineApplication.Persistence.Services
             {
                 throw new ArgumentException("No flight with such id exists");
             }
+            if(flight.Date >= DateTime.Now && flight.CrewMembers.Count != 0)
+            {
+                throw new ValidationException("Crew is ready. Scheduled flight cannot be deleted", "");
+            }    
 
             flight.IsDeleted = true;
             _unitOfWork.Complete();
+        }
+
+        public IEnumerable<Flight> SortFlight(IEnumerable<Flight> flights,string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    flights = flights.OrderByDescending(s => s.Code);
+                    break;
+                case "Date":
+                    flights = flights.OrderBy(s => s.Date);
+                    break;
+                case "date_desc":
+                    flights = flights.OrderByDescending(s => s.Date);
+                    break;
+                case "Status":
+                    flights = flights.OrderBy(s => s.FlightStatus.Description);
+                    break;
+                case "status_desc":
+                    flights = flights.OrderByDescending(s => s.FlightStatus.Description);
+                    break;
+                default:
+                    flights = flights.OrderBy(s => s.Code);
+                    break;
+            }
+            return flights;
         }
 
         public void Dispose()

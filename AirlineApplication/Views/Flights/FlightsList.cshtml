@@ -9,18 +9,24 @@
     {
         <div class="cd-filter-block">
             @Html.LabelFor(m => m.Filter.Departing,"Start point")
-            @Html.DropDownListFor(m => m.Filter.Departing, new SelectList(Model.Airports, "AirportId", "Name"),"Choose your start point", new { @class = "form-control", id = "departure" })
+            @Html.DropDownListFor(m => m.Filter.Departing, new SelectList(Model.Airports, "AirportId", "Name"),
+                                                                        "Choose your start point",
+                                                                        new { @class = "form-control", id = "departure" })
             @Html.ValidationMessageFor(m => m.Filter.Departing)
         </div>
 
         <div class="cd-filter-block">
             @Html.LabelFor(m => m.Filter.Landing, "Destination point")
-            @Html.DropDownListFor(m => m.Filter.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "Choose your destination point", new { @class = "form-control", id = "landing" })
+            @Html.DropDownListFor(m => m.Filter.Landing, new SelectList(Model.Airports, "AirportId", "Name"),
+                                                                    "Choose your destination point", 
+                                                                    new { @class = "form-control", id = "landing" })
             @Html.ValidationMessageFor(m => m.Filter.Landing)
         </div>
         <div class="cd-filter-block">
             @Html.LabelFor(m => m.Filter.FlightStatus)
-            @Html.DropDownListFor(m => m.Filter.FlightStatus, new SelectList(Model.Statuses, "StatusId", "Description"), "Choose flight status", new { @class = "form-control", id = "status" })
+            @Html.DropDownListFor(m => m.Filter.FlightStatus, new SelectList(Model.Statuses, "StatusId", "Description"),
+                                                                        "Choose flight status",
+                                                                        new { @class = "form-control", id = "status" })
             @Html.ValidationMessageFor(m => m.Filter.FlightStatus)
         </div>
         <div class="cd-filter-block">
@@ -49,7 +55,7 @@
     {
         <div class="form-group">
             <div id="searchFlights" class="input-group" style="width:300px">
-                @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control", placeholder = "Search by code" })
                 <span class="input-group-addon">
                     <i class="glyphicon glyphicon-search"></i>
                 </span>
@@ -60,29 +66,25 @@
     <table id="ex" class="table table-bordered">
         <thead class="info">
             <tr>
-                <th  id="js-code-header" style="width:100px">
-                            Code
-                        <i class="fa fa-fw fa-sort" ></i>
+                <th id="js-code-header" style="width:100px">
+                    @Html.ActionLink("Code", "ShowFlights",  new { sortOrder = ViewBag.NameSortParm })
+                    <i class="fa fa-fw fa-sort"></i>
                 </th>
                 <th id="js-date-header">
-                    Date
-                    <i class="fa fa-fw fa-sort" ></i>
+                    @Html.ActionLink("Date", "ShowFlights", new { sortOrder = ViewBag.DateSortParm })
+                    <i class="fa fa-fw fa-sort"></i>
                 </th>
                 <th>
                     Time
-                    <i class="fa fa-fw fa-sort"></i>
                 </th>
-                <th  style="width:100px">
-                    Status
-                    <i class="fa fa-fw fa-sort"></i>
+                <th style="width:100px">
+                    @Html.ActionLink("Status", "ShowFlights", new { sortOrder = ViewBag.StatusSortParm })
                 </th>
                 <th  id="js-dep-header">
                     Departing
-                    <i class="fa fa-fw fa-sort"></i>
                 </th>
                 <th >
                     Landing
-                    <i class="fa fa-fw fa-sort"></i>
                 </th>
                 <th >Delete</th>
             </tr>
@@ -96,7 +98,7 @@
                     </td>
                     <td>@flight.Date.ToShortDateString()</td>
                     <td>@flight.Date.TimeOfDay</td>
-                    <td>@flight.FlightStatus.Value</td>
+                    <td>@flight.FlightStatus.Description</td>
                     @foreach (var ar in @flight.Airports)
                     {
                         <td>@ar.Airport.Name</td>

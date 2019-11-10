@@ -18,14 +18,18 @@ namespace AirlineApplication.Controllers
             _service = service;
         }
 
-        public ActionResult ShowFlights(FlightSearchModel filter = null, string query = null)
+        public ActionResult ShowFlights(string sortOrder, FlightSearchModel filter = null, string query = null)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.StatusSortParm = sortOrder == "Status" ? "status_desc" : "Status";
+
             var viewModel = new FlightsViewModel
             {
                 Heading = "All flights",
                 Airports = _service.GetAllAirports(),
                 Statuses = _service.GetAllStatuses(),
-                Flights = _service.GetFilteredFlights(query, filter)
+                Flights = _service.SortFlight(_service.GetFilteredFlights(query, filter), sortOrder)
             };
 
             if (User.IsInRole(RoleName.Admin))

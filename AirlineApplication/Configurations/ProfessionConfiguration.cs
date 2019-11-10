@@ -11,7 +11,6 @@ namespace AirlineApplication.Configurations
     {
         public ProfessionConfiguration()
         {
-
             HasKey<int>(s => s.ProfessionId);
 
             Property(p => p.Name)
