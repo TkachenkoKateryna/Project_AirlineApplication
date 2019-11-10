@@ -4,22 +4,29 @@ using System.Linq;
 using System.Web;
 using AirlineApplication.Core.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
+using AirlineApplication.Controllers;
+using System.Web.Mvc;
 
 namespace AirlineApplication.Core.ViewModels
 {
     public class FlightViewModel
     {
-        public int FlightId { get; set; }
-
         public string Heading { get; set; }
 
         public string Action
         {
             get
             {
-                return (FlightId != 0) ? "UpdateFlight" : "CreateFlight";
+                Expression<Func<FlightsController, ActionResult>> update = (c => c.UpdateFlight(this));
+                Expression<Func<FlightsController, ActionResult>> create = (c => c.CreateFlight(this));
+
+                var action = (FlightId != 0) ? update : create;
+                return (action.Body as MethodCallExpression).Method.Name;
             }
         }
+
+        public int FlightId { get; set; }
 
         [Required]
         public string Code { get; set; }

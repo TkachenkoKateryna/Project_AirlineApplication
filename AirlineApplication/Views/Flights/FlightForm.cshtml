@@ -2,7 +2,6 @@
 @using System.Data.Entity;
 @{
     ViewBag.Title = Model.Heading;
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>@Model.Heading</h2>
@@ -49,11 +48,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
-            $("#departure").change(function () {
-                var val = $("#departure").val();
-                $("#landing").children('option').show();
-                $('#landing option[value=' + val + ']').hide();
-            })
+            filter.dropdownFilter();
         });
     </script>
 }

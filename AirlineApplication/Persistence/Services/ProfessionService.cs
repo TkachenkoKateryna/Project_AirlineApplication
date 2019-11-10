@@ -21,7 +21,8 @@ namespace AirlineApplication.Persistence.Services
 
         public IEnumerable<Profession> GetProfessions()
         {
-            return _unitOfWork.Professions.GetAllProfessions().Select(Mapper.Map<Profession, Profession>);
+            return _unitOfWork.Professions.GetAllProfessions()
+                .Select(Mapper.Map<Profession, Profession>);
         }
 
         public void Dispose()

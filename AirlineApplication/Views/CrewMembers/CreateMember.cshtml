@@ -42,7 +42,7 @@
         <div class="engine eng-big2">
             <div class="fan">
                 <div class="front">
-                    <div class="fan inner">       </div>
+                    <div class="fan inner"></div>
                 </div>
             </div>
         </div>
@@ -66,37 +66,8 @@
 {
     <script>
         $(document).ready(function () {
-
-            $.ajax({
-                type: "GET",
-                url: "/api/profession",
-                data: "{}",
-                success: function (data) {
-                    var s = '<option value="-1">Please Select a Profession</option>';
-                    for (var i = 0; i < data.length; i++) {
-                        s += '<option value="' + data[i].professionId + '">' + data[i].name + '</option>';
-                    }
-                    $("#professionDropdown").html(s);
-                }
-            });
-
-            $('#submit').on("click", function () {
-                var name = $("#name").val();
-                var profId = $("#professionDropdown").val();
-                $.ajax({
-                    type: "POST",
-                    url: "/api/crewmembers",
-                    data: {
-                        'fullName': name,
-                        'professionId': profId
-                    },
-                    cache: false,
-                    success: function () {
-                        location.href = "http://localhost:57475/CrewMembers/ShowMembers"
-                    }
-                })
-                return false;
-            });
+            MembersController.getProfessions();
+            MembersController.createCrewMembers();
         });
     </script>
 }

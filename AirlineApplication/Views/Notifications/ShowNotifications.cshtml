@@ -1,0 +1,38 @@
+﻿@model IEnumerable<AirlineApplication.Core.ViewModels.NotificationViewModel>
+
+@{
+    ViewBag.Title = "ShowNotifications";
+}
+
+<h2>Show Notifications</h2>
+
+<ul class="notifications" voffset>
+    @foreach(var not in Model)
+    {
+        <li>
+            <div class="date">
+                <div class="month">
+                    @not.DateTime.ToString("MMM");
+                </div>
+                <div class="day">
+                    @not.DateTime.Day
+                </div>
+            </div>
+            <div class="details">
+                <p>Type @not.Type</p>
+                <p>Dispatcher @not.User.Email</p>
+                @if (User.IsInRole("Admin"))
+                {
+                    <p>Notification @not.Description</p>
+                    @Html.ActionLink("Complete", "Complete", "Notifications", new { id = not.NotificationId }, null)
+                }
+                @if (User.IsInRole("Dispatcher"))
+                {
+                    <p><strong>Notification </strong>@not.Description</p>
+                    <p><strong>IsCompleted</strong></p>
+                    @Html.ActionLink("Resolve", "Resolve", "Notifications", new { id = not.NotificationId }, null)
+                }
+            </div>
+        </li>
+    }
+</ul>

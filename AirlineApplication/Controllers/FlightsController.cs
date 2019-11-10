@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using AirlineApplication.Core.Models;
 using AirlineApplication.Core.ViewModels;
 using AirlineApplication.Core.Services;
-using AirlineApplication.Core.ViewModels.Search;
 
 namespace AirlineApplication.Controllers
 {
@@ -30,20 +29,10 @@ namespace AirlineApplication.Controllers
             };
 
             if (User.IsInRole(RoleName.Admin))
+            {
                 return View("FlightsList", viewModel);
+            }
             return View("ReadOnlyFlightsList", viewModel);
-        }
-
-        [HttpPost]
-        public ActionResult Search(FlightsViewModel viewModel)
-        {
-            return RedirectToAction("ShowFlights", "Flights", new { query = viewModel.SearchTerm });
-        }
-
-        [HttpPost]
-        public ActionResult Filter(FlightsViewModel viewModel)
-        {
-            return RedirectToAction("ShowFlights", "Flights", new { @filter = viewModel.Filter});
         }
 
         [Authorize(Roles ="Admin")]
@@ -113,6 +102,18 @@ namespace AirlineApplication.Controllers
             _service.UpdateFlight(viewModel);
 
             return RedirectToAction("ShowFlights", "Flights");
+        }
+
+        [HttpPost]
+        public ActionResult Search(FlightsViewModel viewModel)
+        {
+            return RedirectToAction("ShowFlights", "Flights", new { @query = viewModel.SearchTerm });
+        }
+
+        [HttpPost]
+        public ActionResult Filter(FlightsViewModel viewModel)
+        {
+            return RedirectToAction("ShowFlights", "Flights", new { @filter = viewModel.Filter });
         }
     }
 }

@@ -73,7 +73,7 @@
     <script>
         $(document).ready(function () {
             $('#submit').on("click", function () {
-                $("#myModal").modal();
+                $("#myModal").modal(toggle);
             });
 
             $('#send').on("click", function () {
@@ -95,6 +95,7 @@
                     },
                     success: function () {
                         alert('Send');
+
                     }
                 });
             });

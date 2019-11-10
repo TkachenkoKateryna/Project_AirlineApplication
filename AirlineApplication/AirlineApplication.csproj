@@ -231,8 +231,8 @@
     <Content Include="Content\airoplane.css" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CrewMembersController.cs" />
-    <Compile Include="Controllers\Api\CrewsController.cs" />
     <Compile Include="Controllers\Api\FlightsController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Core\DTOs\NotificationDto.cs" />
     <Compile Include="Controllers\Api\ProfessionController.cs" />
     <Compile Include="Controllers\CrewMembersController.cs" />
@@ -266,7 +266,8 @@
     <Compile Include="Core\ViewModels\AccountViewModels\SendCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\FlightSearchModel.cs" />
-    <Compile Include="Core\ViewModels\Search\PaggingModel.cs" />
+    <Compile Include="Core\ViewModels\NotificationViewModel.cs" />
+    <Compile Include="Core\ViewModels\UserViewModel.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -798,10 +799,10 @@
     <Content Include="Views\CrewMembers\CreateMember.cshtml" />
     <Content Include="Views\CrewMembers\UpdateMember.cshtml" />
     <Content Include="Views\Flights\ReadOnlyFlightsList.cshtml" />
+    <Content Include="Views\Notifications\ShowNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Notifications\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />

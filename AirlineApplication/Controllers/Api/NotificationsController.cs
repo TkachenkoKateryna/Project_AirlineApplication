@@ -24,9 +24,21 @@ namespace AirlineApplication.Controllers.Api
         [HttpGet]
         public IEnumerable<NotificationDto> GetNotifications()
         {
-            var notifications = _notifService.GetAllNotifications()
-               .Where(n => n.IsCompleted != true)
-               .ToList();
+            List<Notification> notifications = new List<Notification>();
+
+            if (User.IsInRole("Admin"))
+            {
+                 notifications = _notifService.GetAllNotifications()
+                    .Where(n => n.IsCompleted == false)
+                     .ToList();
+            }
+            if (User.IsInRole("Dispatcher"))
+            {
+                 notifications = _notifService.GetAllNotifications()
+                    .Where(n => n.IsCompleted == true &&
+                     n.IsResolved == false )
+                    .ToList();
+            }
 
             return notifications.Select(Mapper.Map<Notification, NotificationDto>);
         }

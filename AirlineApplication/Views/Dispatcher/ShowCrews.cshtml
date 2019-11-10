@@ -4,7 +4,7 @@
     ViewBag.Title = "ShowAllCrews";
 }
 
-<h2>ShowAllCrews</h2>
+<h2>Crews</h2>
 
 <table  id="crews" class="table table-bordered table-hover">
     <thead class="thead-dark">
@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        @*@foreach (var crew in Model)
+        @foreach (var crew in Model)
         {
             <tr>
                 <td>@crew.FlightCode</td>
@@ -31,8 +31,8 @@
                 <td>@crew.Navigator</td>
                 <td>@crew.RadioOperator</td>
                 <td>@crew.MainFlightAttendant</td>
-                <td>@crew.FligthAttendant</td>*@
-                @*<td>
+                <td>@crew.FligthAttendant</td>
+                <td>
                     @if (crew.Empty == true)
                     {
                         <a href="@Url.Action("CreateCrew", "Dispatcher", new { id = crew.CrewId, code = crew.FlightCode, date = crew.Date})">Create</a>
@@ -41,59 +41,8 @@
                     {
                         <a href="@Url.Action("UpdateCrew", "Dispatcher", new { id = crew.CrewId, date = crew.Date})">Edit</a>
                     }
-                </td>*@
-            @*</tr>*@
+                </td>
+            </tr>
         }
     </tbody>
 </table>
-
-@section scripts
-{
-    <script>
-        $(document).ready(function () {
-            $("#crews").DataTable({
-                ajax: {
-                    url: "/api/crews",
-                    dataSrc: "",
-                },
-                columns: [
-                    {
-                        data: "flightCode",
-                    },
-                    {
-                        data: "date"
-                    },
-                    {
-                        data: "captain"
-                    },
-                    {
-                        data: "firstPilot"
-                    },
-                    {
-                        data: "navigator"
-                    },
-                    {
-                        data: "radioOperator"
-                    },
-                    {
-                        data: "mainFlightAttendant"
-                    },
-                    {
-                        data: "fligthAttendant"
-                    },
-                    {
-                        data: 'empty',
-                        render: function(data, type, crew){
-                            if (data) {
-                                return "<a href='http://localhost:57475/Dispatcher/CreateCrew?id="+crew.crewId+"&code="+crew.flightCode+"&date="+crew.date+"'>Create</a>";
-                            }
-                            else {
-                                 return "<a href='http://localhost:57475/Dispatcher/UpdateCrew?id="+crew.crewId+ "&date="+crew.date+"'>Edit</a>";
-                           }
-                        }
-                    }
-                ]
-            });
-        });
-    </script>
-}

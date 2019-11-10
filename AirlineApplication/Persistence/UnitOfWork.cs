@@ -11,6 +11,7 @@ namespace AirlineApplication.Persistence
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        private bool disposed = false;
 
         private IFlightRepository _flightRepository;
         private ICrewRepository _crewRepository;
@@ -48,9 +49,6 @@ namespace AirlineApplication.Persistence
             _context.SaveChanges();
         }
 
-
-        private bool disposed = false;
-
         public void Dispose()
         {
             Dispose(true);
@@ -63,8 +61,8 @@ namespace AirlineApplication.Persistence
             {
                 if (disposing)
                 {
+                    _context.Dispose();
                 }
-
                 this.disposed = true;
             }
         }

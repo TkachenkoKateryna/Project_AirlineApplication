@@ -28,6 +28,9 @@ namespace AirlineApplication.App_Start
             Mapper.CreateMap<ApplicationUser, UserDto>();
             Mapper.CreateMap<Notification, NotificationDto>();
 
+            Mapper.CreateMap<ApplicationUser, UserViewModel>();
+            Mapper.CreateMap<Notification, NotificationViewModel>();
+
             Mapper.CreateMap<UserDto, ApplicationUser>();
             Mapper.CreateMap<NotificationDto, Notification>();
 

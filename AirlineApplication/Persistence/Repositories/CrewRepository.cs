@@ -19,7 +19,8 @@ namespace AirlineApplication.Persistence.Repositories
         public IEnumerable<CrewMember> GetAllCrewMembers()
         {
             return _context.CrewMembers.Include(m => m.Profession)
-                .Include(m => m.Flights.Select(f => f.Flight))
+                .Include(m => m.Flights
+                .Select(f => f.Flight))
                 .ToList();
         }
 

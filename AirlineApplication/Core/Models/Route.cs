@@ -18,10 +18,5 @@ namespace AirlineApplication.Core.Models
         public  Airport Airport { get; set; }
 
         public bool DestinationPoint { get; set; }
-
-        public void Modify(int airportId)
-        {
-            AirportId = airportId;
-        }
     }
 }

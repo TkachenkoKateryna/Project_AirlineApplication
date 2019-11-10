@@ -11,10 +11,15 @@ namespace AirlineApplication.Core.Services
     public interface ICrewService : IDisposable
     {
         IEnumerable<CrewsViewModel> GetCrews();
+
         IEnumerable<CrewMember> GetCrewMembers();
+
         IEnumerable<CrewMember> GetFreeCrewMembers(int id, string date);
+
         void CreateCrew(CrewViewModel viewModel);
+
         CrewViewModel FormCrew(int id, CrewViewModel viewModel);
+
         void UpdateCrew(CrewViewModel viewModel);
     }
 }

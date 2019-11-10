@@ -6,11 +6,17 @@ namespace AirlineApplication.Core
     public interface IUnitOfWork : IDisposable
     {
         IFlightRepository Flights { get; }
+
         IAirportRepository Airports { get; }
+
         ICrewRepository CrewMembers { get; }
+
         IProfessionRepository Professions { get; }
+
         IFlightStatusRepository Statuses { get; }
+
         INotificationRepository Notifications { get; }
+
         void Complete();
     }
 }

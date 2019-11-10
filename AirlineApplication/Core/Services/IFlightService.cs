@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AirlineApplication.Core.ViewModels.Search;
 using AirlineApplication.Core.Models;
 using AirlineApplication.Core.ViewModels;
 

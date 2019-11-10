@@ -12,6 +12,7 @@ using AirlineApplication.Core.Services;
 
 namespace AirlineApplication.Controllers
 {
+    [Authorize(Roles ="Admin,Dispatcher")]
     public class DispatcherController : Controller
     {
         private readonly ICrewService _crewService;
@@ -78,7 +79,5 @@ namespace AirlineApplication.Controllers
 
             return RedirectToAction("ShowCrews", "Dispatcher");
         }
-
-        
     }
 }

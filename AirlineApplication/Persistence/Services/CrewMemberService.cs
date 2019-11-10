@@ -21,12 +21,14 @@ namespace AirlineApplication.Persistence.Services
 
         public IEnumerable<CrewMemberDto> GetCrewMembers()
         {
-            return _unitOfWork.CrewMembers.GetAllCrewMembers().Select(Mapper.Map<CrewMember, CrewMemberDto>);
+            return _unitOfWork.CrewMembers.GetAllCrewMembers()
+                .Select(Mapper.Map<CrewMember, CrewMemberDto>);
         }
 
         public CrewMemberDto GetCrewMember(int crewMemberId)
         {
             var member = _unitOfWork.CrewMembers.GetCrewMember(crewMemberId);
+
             if (member == null)
             {
                 throw new ArgumentException("There is no crew member with such id");
@@ -44,10 +46,12 @@ namespace AirlineApplication.Persistence.Services
         public void UpdateCrewMember(int id, CrewMemberDto memberDto)
         {
             var memberInDb = _unitOfWork.CrewMembers.GetCrewMember(id);
+
             if (memberInDb == null)
             {
                 throw new ArgumentException("There is no crew member with such id");
             }
+
             Mapper.Map(memberDto, memberInDb);
             _unitOfWork.Complete();
         }

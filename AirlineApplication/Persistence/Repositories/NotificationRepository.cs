@@ -18,13 +18,19 @@ namespace AirlineApplication.Persistence.Repositories
 
         public IEnumerable<Notification> GetAllNotifications()
         {
-            return _context.Notifications.Include(n => n.User).ToList();
+            return _context.Notifications.Include(n => n.User)
+                .ToList();
         }
 
-        public void Create(Notification notification)
+        public void CreateNotification(Notification notification)
         {
             _context.Notifications.Add(notification);
         }
 
+        public Notification GetNotification(int id)
+        {
+           return  _context.Notifications.Include(n => n.User)
+                .FirstOrDefault(n => n.NotificationId == id);
+        }
     }
 }

@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using System.Threading.Tasks;
 using AirlineApplication.Core.ViewModels;
 using AirlineApplication.Core.Models;
 using AirlineApplication.Core.Services;
 using AirlineApplication.Core;
-using AirlineApplication.Core.ViewModels.Search;
 using AirlineApplication.Core.ModelState;
-using System.Web.Http;
+using System.Configuration.Provider;
 
 namespace AirlineApplication.Persistence.Services
 {
@@ -29,7 +27,8 @@ namespace AirlineApplication.Persistence.Services
 
         public IEnumerable<Flight> GetFilteredFlights(string query = null, FlightSearchModel filter = null)
         {
-            var flights = _unitOfWork.Flights.GetAllFlights();
+            var flights = _unitOfWork.Flights.GetAllFlights()
+                .Where(fl => fl.IsDeleted != true);
 
             if (!String.IsNullOrWhiteSpace(query))
             {
@@ -37,8 +36,8 @@ namespace AirlineApplication.Persistence.Services
             }
             if (filter.Departing.HasValue)
             {
-                flights = flights.Where(t => t.Airports.Any(ar => ar.AirportId == filter.Departing &&
-                                       ar.DestinationPoint == true));
+                flights = flights.Where(t => t.Airports.Any(ar => ar.AirportId == filter.Departing 
+                        && ar.DestinationPoint == true));
             }
             if (filter.Landing.HasValue)
             {
@@ -60,6 +59,7 @@ namespace AirlineApplication.Persistence.Services
         public Flight GetFlight(int id )
         {
             var flight = _unitOfWork.Flights.GetFlight(id);
+
             if (flight == null)
             {
                 throw new ArgumentException("No flight with such id exists");
@@ -72,7 +72,7 @@ namespace AirlineApplication.Persistence.Services
         {
             if(_unitOfWork.Flights.ExistsFlightWithCode(viewModel.Code))
             {
-                throw new ValidationException("Such flight already exists", "");
+                throw new ArgumentException("Such flight already exists");
             }
 
             _unitOfWork.Flights.AddFlight(Mapper.Map<FlightViewModel, Flight>(viewModel));
@@ -115,10 +115,12 @@ namespace AirlineApplication.Persistence.Services
         public void DeleteFlight(int id)
         {
             var flight = _unitOfWork.Flights.GetFlight(id);
+
             if (flight == null)
             {
                 throw new ArgumentException("No flight with such id exists");
             }
+
             flight.IsDeleted = true;
             _unitOfWork.Complete();
         }
@@ -127,5 +129,5 @@ namespace AirlineApplication.Persistence.Services
         {
             _unitOfWork.Dispose();
         }
-}
+    }
 }

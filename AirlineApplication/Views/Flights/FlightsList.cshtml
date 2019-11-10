@@ -8,25 +8,25 @@
     @using (Html.BeginForm("ShowFlights", "Flights"))
     {
         <div class="cd-filter-block">
-            @Html.LabelFor(m => m.Filter.Departing)
-            @Html.DropDownListFor(m => m.Filter.Departing, new SelectList(Model.Airports, "AirportId", "Name", "City"), "", new { @class = "form-control", id = "departure" })
+            @Html.LabelFor(m => m.Filter.Departing,"Start point")
+            @Html.DropDownListFor(m => m.Filter.Departing, new SelectList(Model.Airports, "AirportId", "Name"),"Choose your start point", new { @class = "form-control", id = "departure" })
             @Html.ValidationMessageFor(m => m.Filter.Departing)
         </div>
 
         <div class="cd-filter-block">
-            @Html.LabelFor(m => m.Filter.Landing)
-            @Html.DropDownListFor(m => m.Filter.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "", new { @class = "form-control", id = "landing" })
+            @Html.LabelFor(m => m.Filter.Landing, "Destination point")
+            @Html.DropDownListFor(m => m.Filter.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "Choose your destination point", new { @class = "form-control", id = "landing" })
             @Html.ValidationMessageFor(m => m.Filter.Landing)
         </div>
         <div class="cd-filter-block">
             @Html.LabelFor(m => m.Filter.FlightStatus)
-            @Html.DropDownListFor(m => m.Filter.FlightStatus, new SelectList(Model.Statuses, "StatusId", "Description"), "", new { @class = "form-control", id = "status" })
+            @Html.DropDownListFor(m => m.Filter.FlightStatus, new SelectList(Model.Statuses, "StatusId", "Description"), "Choose flight status", new { @class = "form-control", id = "status" })
             @Html.ValidationMessageFor(m => m.Filter.FlightStatus)
         </div>
         <div class="cd-filter-block">
             @Html.LabelFor(m => m.Filter.Date)
             <div class='input-group date' id='datetimepicker1' style="width:200px">
-                @Html.TextBoxFor(m => m.Filter.Date, new { @id = "date" })
+                @Html.TextBoxFor(m => m.Filter.Date, new { @id = "date", placeholder = "Choose date" })
                 <span class="input-group-addon" id="date">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -35,7 +35,7 @@
         <span>
             <button class="btn btn-link btn-sm" id="discard">Discard</button>
         </span>
-        <button type="submit" class="btn btn-primary btn-lg">Filter</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="background-color: #7DC9E7">Filter</button>
     }
 
 </div>
@@ -45,7 +45,7 @@
 
     <span style="font-size:30px;cursor:pointer" id="open">&#9776; Filters</span>
 
-    @using (Html.BeginForm("ShowFlights", "Flights"))
+    @using (Html.BeginForm("Search", "Flights"))
     {
         <div class="form-group">
             <div id="searchFlights" class="input-group" style="width:300px">
@@ -94,7 +94,7 @@
                     <td>
                     @Html.ActionLink(flight.Code, "UpdateFlight", "Flights", new { id = flight.FlightId }, null)
                     </td>
-                    <td>@flight.Date.Date</td>
+                    <td>@flight.Date.ToShortDateString()</td>
                     <td>@flight.Date.TimeOfDay</td>
                     <td>@flight.FlightStatus.Value</td>
                     @foreach (var ar in @flight.Airports)
@@ -119,7 +119,7 @@
             filter.discard();
             filter.moveSidebar();
 
-            GigsController.cancel();
+            FlightsController.cancel();
         });
     </script>
 }

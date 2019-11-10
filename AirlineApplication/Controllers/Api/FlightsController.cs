@@ -8,7 +8,6 @@ using AirlineApplication.Core.Services;
 
 namespace AirlineApplication.Controllers.Api
 { 
-
     public class FlightsController : ApiController
     {
         private readonly IFlightService _service;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace AirlineApplication.Core.DTOs
+﻿namespace AirlineApplication.Core.DTOs
 {
     public class CrewMemberDto
     {

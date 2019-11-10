@@ -21,23 +21,32 @@ namespace AirlineApplication.Persistence.Services
 
         public IEnumerable<CrewMember> GetCrewMembers()
         {
-            return _unitOfWork.CrewMembers.GetAllCrewMembers().Where(m => m.isNotWorking == false).ToList();
+            return _unitOfWork.CrewMembers.GetAllCrewMembers()
+                .Where(m => m.isNotWorking == false);
         }
+
         public IEnumerable<CrewMember> GetFreeCrewMembers(int id, string date)
         {
             return _unitOfWork.CrewMembers.GetAllCrewMembers()
                 .Where(m => m.isNotWorking == false)
-                .Where(m => !m.Flights.Any(fl => fl.Flight.Date.ToString("dd/MM/yyyy") == date) 
-                || m.Flights.Any(f => f.FlightId == id)).ToList();
+                .Where(m => !m.Flights.Any(fl => fl.Flight.Date.ToString("dd/MM/yyyy") == date)
+                || m.Flights.Any(f => f.FlightId == id));
         }
 
         public void CreateCrew(CrewViewModel viewModel)
         {
             var flight = _unitOfWork.Flights.GetFlight(viewModel.FlightId);
-            _unitOfWork.CrewMembers.CreateCrew(flight, new List<int>() { viewModel.Captain, viewModel.FirstPilot, viewModel.Navigator, viewModel.RadioOperator, viewModel.MainFlightAttendant, viewModel.FligthAttendant });
+
+            _unitOfWork.CrewMembers.CreateCrew(flight, new List<int>() {
+                viewModel.Captain,
+                viewModel.FirstPilot,
+                viewModel.Navigator,
+                viewModel.RadioOperator,
+                viewModel.MainFlightAttendant,
+                viewModel.FligthAttendant
+            });
             _unitOfWork.Complete();
         }
-
 
         public CrewViewModel FormCrew(int id, CrewViewModel viewModel)
         {
@@ -109,7 +118,9 @@ namespace AirlineApplication.Persistence.Services
 
         public IEnumerable<CrewsViewModel> GetCrews()
         {
-            var flights = _unitOfWork.Flights.GetAllFlights().Where(fl => fl.IsDeleted == false && fl.Date >= DateTime.Now);
+            var flights = _unitOfWork.Flights.GetAllFlights()
+                .Where(fl => fl.IsDeleted == false 
+                && fl.Date >= DateTime.Now);
 
             var crew = new List<CrewsViewModel>();
 

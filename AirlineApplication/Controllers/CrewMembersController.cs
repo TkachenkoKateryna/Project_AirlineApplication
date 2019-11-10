@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AirlineApplication.Core;
+using AirlineApplication.Core.Services;
 using AirlineApplication.Core.ViewModels;
 using AirlineApplication.Core.Models;
 
@@ -12,11 +12,11 @@ namespace AirlineApplication.Controllers
     [Authorize(Roles = RoleName.Admin)]
     public class CrewMembersController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ICrewMemberService _crewMemberService;
 
-        public CrewMembersController(IUnitOfWork unitOfWork)
+        public CrewMembersController(ICrewMemberService crewMemberService)
         {
-            _unitOfWork = unitOfWork;
+            _crewMemberService = crewMemberService;
         }
 
         public ActionResult ShowMembers()
@@ -26,11 +26,13 @@ namespace AirlineApplication.Controllers
 
         public ActionResult EditMember(int id)
         {
+            var member = _crewMemberService.GetCrewMember(id);
+
             var viewModel = new CrewMemberViewModel()
             {
                 CrewMemberId = id,
-                FullName = _unitOfWork.CrewMembers.GetCrewMember(id).FullName,
-                ProfessionId = _unitOfWork.CrewMembers.GetCrewMember(id).ProfessionId
+                FullName = member.FullName,
+                ProfessionId = member.ProfessionId
             };
             return View("UpdateMember", viewModel);
         }

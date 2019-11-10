@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css?family=Carrois+Gothic|DM+Sans|Share&display=swap" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-fixed-top navbar-light">
@@ -79,17 +78,16 @@
             </a>
         </div>
         <div class="footer-copyright text-center py-3">
-            <a href="#">
-                <i class="glyphicon glyphicon-home"></i>
-            </a>
-            <a href="https://mdbootstrap.com/education/bootstrap/"> MyAirline.com</a>
+                @Html.ActionLink("MyAirline.com", "Index", "Home",new { @class = "glyphicon glyphicon-home" })
         </div>
     </footer>
+
     @*references to bundles*@
     @Scripts.Render("~/bundles/lib")
     @Scripts.Render("~/bundles/app")
     @RenderSection("scripts", required: false)
 
+    @*markup script for notifications popup*@
     <script type="text/x-template" id="notifications-template">
         <ul>
             <%
@@ -119,8 +117,8 @@
                     placement: "bottom",
                 });
             });
-        });
 
+        });
     </script>
 </body>
 </html>

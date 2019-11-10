@@ -1,6 +1,6 @@
-﻿namespace AirlineApplication.Core.DTOs
+﻿namespace AirlineApplication.Core.ViewModels
 {
-    public class UserDto
+    public class UserViewModel
     {
         public string Id { get; set; }
 

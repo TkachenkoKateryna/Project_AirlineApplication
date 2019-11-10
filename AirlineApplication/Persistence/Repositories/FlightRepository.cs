@@ -20,7 +20,8 @@ namespace AirlineApplication.Persistence.Repositories
         {
             return _context.Flights.Include(st => st.FlightStatus)
                         .Include(m => m.CrewMembers.Select(y => y.CrewMember))
-                        .Include(a => a.Airports.Select(ar => ar.Airport)).ToList();
+                        .Include(a => a.Airports.Select(ar => ar.Airport))
+                        .ToList();
         }
 
         public Flight GetFlight(int id)
@@ -45,12 +46,14 @@ namespace AirlineApplication.Persistence.Repositories
 
         public IEnumerable<Route> FindRoute(int flightId)
         {
-            return _context.Routes.Where(r => r.FlightId == flightId).ToList();
+            return _context.Routes.Where(r => r.FlightId == flightId)
+                .ToList();
         }
 
         public IEnumerable<Crew> FindCrew(int flightId)
         {
-            return _context.Crew.Where(r => r.FlightId == flightId).ToList();
+            return _context.Crew.Where(r => r.FlightId == flightId)
+                .ToList();
         }
 
         public bool ExistsFlightWithCode(string code)

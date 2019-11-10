@@ -5,7 +5,6 @@ namespace AirlineApplication.Core.DTOs
 {
     public class NotificationDto
     {
-
         public string UserId { get;  set; }
 
         public NotificationType Type { get;  set; }
