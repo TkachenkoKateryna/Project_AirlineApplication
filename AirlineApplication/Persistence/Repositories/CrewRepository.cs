@@ -18,18 +18,24 @@ namespace AirlineApplication.Persistence.Repositories
 
         public IEnumerable<CrewMember> GetAllCrewMembers()
         {
-            return _context.CrewMembers.Include(m => m.Profession).ToList();
+            return _context.CrewMembers.Include(m => m.Profession)
+                .Include(m => m.Flights.Select(f => f.Flight))
+                .ToList();
         }
 
         public IEnumerable<CrewMember> GetAllFreeCrewMembers(Flight flight)
         {
             return _context.CrewMembers.Include(m => m.Profession)
-                .Where(cr => !cr.Flights.Any(fl => fl.Flight.Date == flight.Date)).ToList();
+                .Include(m => m.Flights)
+                .Where(cr => !cr.Flights.Any(fl => fl.Flight.Date == flight.Date))
+                .ToList();
         }
 
         public CrewMember GetCrewMember(int id)
         {
-            return _context.CrewMembers.Include(m => m.Profession).FirstOrDefault(m => m.CrewMemberId == id);
+            return _context.CrewMembers.Include(m => m.Profession)
+                  .Include(m => m.Flights)
+                  .FirstOrDefault(m => m.CrewMemberId == id);
         }
 
         public void CreateCrewMember(CrewMember member)

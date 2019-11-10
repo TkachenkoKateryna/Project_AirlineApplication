@@ -5,20 +5,20 @@ namespace AirlineApplication.Core.Models
 {
     public class Notification
     {
-        public int NotificationId { get; set; }
+        public int NotificationId { get; private set; }
 
-        public int UserId { get; set; }
+        public string UserId { get;  set; }
 
-        public NotificationType Type { get; set; }
+        public NotificationType Type { get;  set; }
 
-        public string Description { get; set; }
+        public string Description { get;  set; }
 
-        public DateTime DateTime { get; set; }
+        public DateTime DateTime { get;  set; }
 
         public bool IsCompleted { get; set; }
 
         public bool IsResolved { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public ApplicationUser User { get;  set; }
     }
 }

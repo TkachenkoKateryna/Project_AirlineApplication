@@ -24,6 +24,13 @@ namespace AirlineApplication.App_Start
                 .ForMember(c => c.StatusId, v => v.MapFrom(e => e.StatusId))
                 .ForMember(c => c.FlightId, v => v.MapFrom(e => e.FlightId));
 
+
+            Mapper.CreateMap<ApplicationUser, UserDto>();
+            Mapper.CreateMap<Notification, NotificationDto>();
+
+            Mapper.CreateMap<UserDto, ApplicationUser>();
+            Mapper.CreateMap<NotificationDto, Notification>();
+
             Mapper.CreateMap<CrewMember, CrewMemberDto>();
             Mapper.CreateMap<CrewMemberDto, CrewMember>();
         }

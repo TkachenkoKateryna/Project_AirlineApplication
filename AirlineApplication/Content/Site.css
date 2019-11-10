@@ -2,12 +2,9 @@
     padding-top: 50px;
     padding-bottom: 20px;
     font-size: 17px;
-}
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -23,6 +20,7 @@ select,
 textarea {
     max-width: 280px;
 }
+/* Bootstrap Overrides*/
 
 .form-group {
     margin-bottom: 20px;
@@ -61,4 +59,113 @@ tr:hover .actions {
     src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
+.navbar {
+    background-color: #7DC9E7;
+    border-color: #7DC9E7;
+}
 
+.navbar-collapse .navbar-nav > li> a {
+    color:#fff;
+}
+
+.navbar-header .navbar-brand {
+    color: #fff;
+    font:24px;
+}
+
+body,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: Carrois Gothic;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #EE7155;
+}
+
+.navbar-right .notifications .badge {
+    position: absolute;
+    top: 9px;
+    right: -1px;
+    background: #F7AF25;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width:100%;
+    background-color: #7DC9E7;
+}
+
+ #icons{
+    margin-left: 30%;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #F7AF25;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+    .sidenav .closebtn {
+        position: absolute;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}
+
+#searchFlights{
+    margin-left: 70%;
+    margin-top: -45px;
+}
+
+#myForm {
+    margin-left: 400px;
+}

@@ -10,7 +10,7 @@ using AirlineApplication.Core;
 
 namespace AirlineApplication.Persistence.Services
 {
-    public class CrewService
+    public class CrewService : ICrewService
     {
         private IUnitOfWork _unitOfWork { get; set; }
 
@@ -21,7 +21,14 @@ namespace AirlineApplication.Persistence.Services
 
         public IEnumerable<CrewMember> GetCrewMembers()
         {
-            return _unitOfWork.CrewMembers.GetAllCrewMembers();
+            return _unitOfWork.CrewMembers.GetAllCrewMembers().Where(m => m.isNotWorking == false).ToList();
+        }
+        public IEnumerable<CrewMember> GetFreeCrewMembers(int id, string date)
+        {
+            return _unitOfWork.CrewMembers.GetAllCrewMembers()
+                .Where(m => m.isNotWorking == false)
+                .Where(m => !m.Flights.Any(fl => fl.Flight.Date.ToString("dd/MM/yyyy") == date) 
+                || m.Flights.Any(f => f.FlightId == id)).ToList();
         }
 
         public void CreateCrew(CrewViewModel viewModel)
@@ -31,12 +38,13 @@ namespace AirlineApplication.Persistence.Services
             _unitOfWork.Complete();
         }
 
+
         public CrewViewModel FormCrew(int id, CrewViewModel viewModel)
         {
             var flight = _unitOfWork.Flights.GetFlight(id);
 
             viewModel.FlightId = flight.FlightId;
-            viewModel.Date = flight.Date;
+            viewModel.Date = flight.Date.ToString("dd/MM/yyyy");
             viewModel.FlightCode = flight.Code;
 
             foreach (var member in flight.CrewMembers)
@@ -101,7 +109,7 @@ namespace AirlineApplication.Persistence.Services
 
         public IEnumerable<CrewsViewModel> GetCrews()
         {
-            var flights = _unitOfWork.Flights.GetAllFlights();
+            var flights = _unitOfWork.Flights.GetAllFlights().Where(fl => fl.IsDeleted == false && fl.Date >= DateTime.Now);
 
             var crew = new List<CrewsViewModel>();
 
@@ -111,6 +119,7 @@ namespace AirlineApplication.Persistence.Services
 
                 model.CrewId = flight.FlightId;
                 model.FlightCode = flight.Code;
+                model.Date = flight.Date.ToString("dd/MM/yyyy");
 
                 if (flight.CrewMembers.Count == 0)
                 {
@@ -146,6 +155,11 @@ namespace AirlineApplication.Persistence.Services
                 crew.Add(model);
             }
             return crew;
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
     }
 }

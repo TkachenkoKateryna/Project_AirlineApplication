@@ -13,8 +13,8 @@ namespace AirlineApplication.Core.Models
 
         public int CrewMemberId { get; set; }
 
-        public virtual Flight Flight { get; set; }
+        public Flight Flight { get; set; }
 
-        public virtual CrewMember CrewMember { get; set; }
+        public CrewMember CrewMember { get; set; }
     }
 }

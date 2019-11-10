@@ -17,10 +17,10 @@ namespace AirlineApplication.Core.Models
 
         public int StatusId { get; set; }
 
-        public virtual FlightStatus FlightStatus { get; set; }
+        public  FlightStatus FlightStatus { get; set; }
 
-        public virtual ICollection<Route> Airports { get; set; }
+        public  ICollection<Route> Airports { get; set; }
 
-        public virtual ICollection<Crew> CrewMembers { get; set; }
+        public  ICollection<Crew> CrewMembers { get; set; }
     }
 }

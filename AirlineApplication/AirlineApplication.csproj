@@ -228,17 +228,25 @@
     <Compile Include="Configurations\NotificationConfiguration.cs" />
     <Compile Include="Configurations\ProfessionConfiguration.cs" />
     <Compile Include="Configurations\RouteConfiguration.cs" />
+    <Content Include="Content\airoplane.css" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CrewMembersController.cs" />
+    <Compile Include="Controllers\Api\CrewsController.cs" />
     <Compile Include="Controllers\Api\FlightsController.cs" />
+    <Compile Include="Core\DTOs\NotificationDto.cs" />
     <Compile Include="Controllers\Api\ProfessionController.cs" />
     <Compile Include="Controllers\CrewMembersController.cs" />
     <Compile Include="Controllers\DispatcherController.cs" />
     <Compile Include="Controllers\FlightsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Api\NotificationsController.cs" />
     <Compile Include="Core\DTOs\CrewMemberDto.cs" />
     <Compile Include="Core\DTOs\ProfessionDto.cs" />
+    <Compile Include="Core\DTOs\UserDto.cs" />
+    <Compile Include="Core\ModelState\ValidationException.cs" />
+    <Compile Include="Core\Repositories\INotificationRepository.cs" />
+    <Compile Include="Core\Services\ICrewMemberService.cs" />
     <Compile Include="Core\Services\ICrewService.cs" />
     <Compile Include="Core\Services\IFlightService.cs" />
     <Compile Include="Core\Models\RoleName.cs" />
@@ -246,6 +254,8 @@
     <Compile Include="Core\Repositories\ICrewRepository.cs" />
     <Compile Include="Core\Repositories\IFlightStatusRepository.cs" />
     <Compile Include="Core\Repositories\IProfessionRepository.cs" />
+    <Compile Include="Core\Services\INotificationService.cs" />
+    <Compile Include="Core\Services\IProfessionService.cs" />
     <Compile Include="Core\ViewModels\CrewMemberViewModel.cs" />
     <Compile Include="Core\ViewModels\FlightsViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\ResetPasswordViewModel.cs" />
@@ -255,11 +265,27 @@
     <Compile Include="Core\ViewModels\AccountViewModels\RegisterViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\SendCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\VerifyCodeViewModel.cs" />
+    <Compile Include="Core\ViewModels\FlightSearchModel.cs" />
+    <Compile Include="Core\ViewModels\Search\PaggingModel.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="App_Start\MappingProfile.cs" />
+    <Compile Include="Persistence\Migrations\201911081004072_NotificationUserIdToString.cs" />
+    <Compile Include="Persistence\Migrations\201911081004072_NotificationUserIdToString.Designer.cs">
+      <DependentUpon>201911081004072_NotificationUserIdToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201911081252155_ChangesToNotificationClass.cs" />
+    <Compile Include="Persistence\Migrations\201911081252155_ChangesToNotificationClass.Designer.cs">
+      <DependentUpon>201911081252155_ChangesToNotificationClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201911081748542_PopulateUserRoles.cs" />
+    <Compile Include="Persistence\Migrations\201911081748542_PopulateUserRoles.Designer.cs">
+      <DependentUpon>201911081748542_PopulateUserRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Repositories\NotificationRepository.cs" />
+    <Compile Include="Persistence\Services\CrewMemberService.cs" />
     <Compile Include="Persistence\Services\CrewService.cs" />
     <Compile Include="Persistence\Services\FlightService.cs" />
     <Compile Include="Persistence\Migrations\201910310826160_InitialModel.cs" />
@@ -323,6 +349,8 @@
     <Compile Include="Persistence\Repositories\AirportRepository.cs" />
     <Compile Include="Persistence\Repositories\FlightStatusRepository.cs" />
     <Compile Include="Persistence\Repositories\ProfessionRepository.cs" />
+    <Compile Include="Persistence\Services\NotificationService.cs" />
+    <Compile Include="Persistence\Services\ProfessionService.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Persistence\Repositories\CrewRepository.cs" />
@@ -336,6 +364,7 @@
     <Compile Include="Core\ViewModels\ValidTime.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
@@ -487,6 +516,10 @@
     <Content Include="Content\dx.material.teal.light.css" />
     <Content Include="Content\dx.softblue.compact.css" />
     <Content Include="Content\dx.softblue.css" />
+    <Content Include="Content\images\mdb.lite.min.css" />
+    <Content Include="Content\index.css" />
+    <Content Include="Content\mdb.lite.min.css" />
+    <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\bootbox.all.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -703,11 +736,15 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jszip.js" />
     <Content Include="Scripts\jszip.min.js" />
+    <Content Include="Scripts\mdb.js" />
+    <Content Include="Scripts\mdb.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\vectormap-data\africa.js" />
     <Content Include="Scripts\vectormap-data\canada.js" />
     <Content Include="Scripts\vectormap-data\eurasia.js" />
@@ -764,7 +801,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\NewFolder1\" />
+    <Folder Include="Views\Notifications\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
@@ -810,6 +847,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201911071428432_RenameColumnIsNotWorking.resx">
       <DependentUpon>201911071428432_RenameColumnIsNotWorking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201911081004072_NotificationUserIdToString.resx">
+      <DependentUpon>201911081004072_NotificationUserIdToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201911081252155_ChangesToNotificationClass.resx">
+      <DependentUpon>201911081252155_ChangesToNotificationClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201911081748542_PopulateUserRoles.resx">
+      <DependentUpon>201911081748542_PopulateUserRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

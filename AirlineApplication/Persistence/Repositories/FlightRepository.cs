@@ -18,23 +18,21 @@ namespace AirlineApplication.Persistence.Repositories
 
         public IEnumerable<Flight> GetAllFlights()
         {
-            return _context.Flights
-                                          .Include(st => st.FlightStatus)
-                                          .Include(m => m.CrewMembers.Select(y => y.CrewMember.Profession))
-                                          .Include(a => a.Airports).ToList();
+            return _context.Flights.Include(st => st.FlightStatus)
+                        .Include(m => m.CrewMembers.Select(y => y.CrewMember))
+                        .Include(a => a.Airports.Select(ar => ar.Airport)).ToList();
         }
 
         public Flight GetFlight(int id)
         {
             return _context.Flights.Include(st => st.FlightStatus)
+                 .Include(m => m.CrewMembers.Select(y => y.CrewMember))
                  .Include(a => a.Airports)
-                 .Single(f => f.FlightId == id);
+                 .SingleOrDefault(f => f.FlightId == id);
         }
 
         public void AddFlight(Flight flight)
         {
-            //flight.Airports.Add(new Route { FlightId = flight.FlightId, AirportId = depId, DestinationPoint = true });
-            //flight.Airports.Add(new Route { FlightId = flight.FlightId, AirportId = landId, DestinationPoint = false });
             _context.Flights.Add(flight);
 
         }
@@ -53,6 +51,11 @@ namespace AirlineApplication.Persistence.Repositories
         public IEnumerable<Crew> FindCrew(int flightId)
         {
             return _context.Crew.Where(r => r.FlightId == flightId).ToList();
+        }
+
+        public bool ExistsFlightWithCode(string code)
+        {
+            return _context.Flights.Any(fl => fl.Code == code);
         }
     }
 }

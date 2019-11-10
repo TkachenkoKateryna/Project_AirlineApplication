@@ -12,16 +12,13 @@ using AirlineApplication.Core.Services;
 
 namespace AirlineApplication.Controllers
 {
-    [Authorize(Roles = "RoleName.Admin,RoleName.Dispatcher")]
     public class DispatcherController : Controller
     {
         private readonly ICrewService _crewService;
-        private readonly IFlightService _flightService;
 
-        public DispatcherController(ICrewService crewService, IFlightService flightService)
+        public DispatcherController(ICrewService crewService)
         {
             _crewService = crewService;
-            _flightService = flightService;
         }
 
         public ActionResult ShowCrews()
@@ -29,13 +26,13 @@ namespace AirlineApplication.Controllers
             return View(_crewService.GetCrews());
         }
 
-        public ActionResult CreateCrew(int id, string code)
+        public ActionResult CreateCrew(int id, string code,string date)
         {
             var viewModel = new CrewViewModel
             {
                 FlightId = id,
                 FlightCode = code,
-                CrewMembers = _crewService.GetCrewMembers()
+                CrewMembers = _crewService.GetFreeCrewMembers(id, date)
             };
 
             return View("CrewForm", viewModel);
@@ -47,7 +44,7 @@ namespace AirlineApplication.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.CrewMembers = _crewService.GetCrewMembers();
+                viewModel.CrewMembers = _crewService.GetFreeCrewMembers(viewModel.FlightId, viewModel.Date);
                 return View("CrewForm", viewModel);
             }
             _crewService.CreateCrew(viewModel);
@@ -55,11 +52,11 @@ namespace AirlineApplication.Controllers
             return RedirectToAction("ShowCrews", "Dispatcher");
         }
 
-        public ActionResult UpdateCrew(int id)
-        { 
+        public ActionResult UpdateCrew(int id, string date)
+        {
             var viewModel = new CrewViewModel()
             {
-                CrewMembers = _crewService.GetCrewMembers()
+                CrewMembers = _crewService.GetFreeCrewMembers(id, date)
             };
 
            viewModel = _crewService.FormCrew(id, viewModel);
@@ -73,7 +70,7 @@ namespace AirlineApplication.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.CrewMembers = _crewService.GetCrewMembers();
+                viewModel.CrewMembers = _crewService.GetFreeCrewMembers(viewModel.FlightId, viewModel.Date);
                 return View("CrewForm", viewModel);
             }
 
@@ -81,5 +78,7 @@ namespace AirlineApplication.Controllers
 
             return RedirectToAction("ShowCrews", "Dispatcher");
         }
+
+        
     }
 }

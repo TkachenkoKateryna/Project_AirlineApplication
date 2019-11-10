@@ -38,7 +38,7 @@ namespace AirlineApplication.Migrations
                  new CrewMember{FullName = "Shtez Katerina Konstantnovna", ProfessionId = 6, },
                  new CrewMember{FullName = "Erochina Daria Aleksandrovna", ProfessionId = 6, }
             };
-            crewMembers.ForEach(cr => context.CrewMembers.AddOrUpdate(cr));
+            crewMembers.ForEach(cr => context.CrewMembers.AddOrUpdate(m => m.FullName, cr));
             context.SaveChanges();
 
             var flights = new List<Flight>
@@ -61,7 +61,7 @@ namespace AirlineApplication.Migrations
                  new Flight{Code ="1C3",Date =  new DateTime(2019,11,13,18,30,00), StatusId = 7},
                  new Flight{Code ="5G4",Date =  new DateTime(2019,11,14,12,00,00), StatusId = 7},
             };
-            flights.ForEach(fl => context.Flights.AddOrUpdate(fl));
+            flights.ForEach(fl => context.Flights.AddOrUpdate(f => f.Code, fl));
             context.SaveChanges();
 
             var crew = new List<Crew>
@@ -91,7 +91,7 @@ namespace AirlineApplication.Migrations
                  new Crew {FlightId = 80, CrewMemberId = 15},
                  new Crew {FlightId = 80, CrewMemberId = 18}
             };
-            crew.ForEach(cr => context.Crew.AddOrUpdate(cr));
+            crew.ForEach(cr => context.Crew.AddOrUpdate(c => new { c.FlightId, c.CrewtId }, cr));
             context.SaveChanges();
 
             var routes = new List<Route>
@@ -123,7 +123,7 @@ namespace AirlineApplication.Migrations
                  new Route {FlightId = 90, AirportId = 4, DestinationPoint = true},
                  new Route {FlightId = 90, AirportId = 5, DestinationPoint = false}
             };
-            routes.ForEach(r => context.Routes.AddOrUpdate(r));
+            routes.ForEach(route => context.Routes.AddOrUpdate(r => new { r.FlightId, r.AirportId, r.DestinationPoint }, route));
             context.SaveChanges();
         }
     }

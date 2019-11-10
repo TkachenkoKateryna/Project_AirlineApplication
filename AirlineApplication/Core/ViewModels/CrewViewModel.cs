@@ -26,7 +26,7 @@ namespace AirlineApplication.Core.ViewModels
 
         public int FlightId { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         [Required]
         public string FlightCode { get; set; }

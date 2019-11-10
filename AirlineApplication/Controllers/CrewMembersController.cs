@@ -29,7 +29,8 @@ namespace AirlineApplication.Controllers
             var viewModel = new CrewMemberViewModel()
             {
                 CrewMemberId = id,
-                FullName = _unitOfWork.CrewMembers.GetCrewMember(id).FullName
+                FullName = _unitOfWork.CrewMembers.GetCrewMember(id).FullName,
+                ProfessionId = _unitOfWork.CrewMembers.GetCrewMember(id).ProfessionId
             };
             return View("UpdateMember", viewModel);
         }

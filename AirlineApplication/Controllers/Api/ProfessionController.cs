@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AirlineApplication.Core;
-using AirlineApplication.Core.DTOs;
+using AirlineApplication.Core.Services;
 using AirlineApplication.Core.Models;
 using AutoMapper;
 
@@ -13,17 +13,16 @@ namespace AirlineApplication.Controllers.Api
 {
     public class ProfessionController : ApiController
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IProfessionService _profService;
 
-        public ProfessionController(IUnitOfWork unitOfWork)
+        public ProfessionController(IProfessionService profService)
         {
-            _unitOfWork = unitOfWork;
+            _profService = profService;
         }
 
-        // GET / api/crewmemebers
         public IEnumerable<Profession> GetCrewMembers()
         {
-            return _unitOfWork.Professions.GetAllProfessions().Select(Mapper.Map<Profession, Profession>);
+            return _profService.GetProfessions();
         }
     }
 }

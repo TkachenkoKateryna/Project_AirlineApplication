@@ -14,6 +14,8 @@ namespace AirlineApplication.Core.ViewModels
 
         public string FlightCode { get; set; }
 
+        public string Date { get; set; }
+
         public string Captain { get; set; }
 
         public string FirstPilot { get; set; }

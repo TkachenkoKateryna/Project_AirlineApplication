@@ -1,17 +1,67 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "CreateMember";
+    @Styles.Render("~/Content/airoplane.css")
 }
 
-<h2>CreateMember</h2>
-
-<form id="myForm">
-    <input type="text" name="name" id="name"/>
-    <label for="departmentsDropdown"><b>Departments</b></label>
-    <select class="form-control" id="departmentsDropdown" name="departmentsDropdown"></select>
-    <input type='button' id="submit" value='Create' />
-</form>
-
+<body>
+    <form id="myForm">
+        <h2>CreateMember</h2>
+        <div>
+            @Html.Label("Name")
+            <input  class="form-control" type="text" name="name" id="name" />
+        </div>
+        <div>
+            @Html.Label("Choose profession")
+            <select class="form-control" id="professionDropdown" name="professionDropdown"></select>
+        </div>
+        <input type='submit' id="submit" class="btn btn-warning" value='Submit' />
+    </form>
+    <div class="plane">
+        <div class="ver-stab"></div>
+        <div class="ver-stab-tri"></div>
+        <div class="nose">
+            <div class="window1"></div>
+            <div class="window2"></div>
+            <div class="window3"></div>
+            <div class="window4"></div>
+        </div>
+        <div class="back-body"></div>
+        <div class="hor-stab"></div>
+        <div class="hor-stab2"></div>
+        <div class="wing"></div>
+        <div class="wing-bottom"></div>
+        <div class="wing right"></div>
+        <div class="wing-bottom wing-right"></div>
+        <div class="engine">
+            <div class="fan">
+                <div class="front">
+                    <div class="fan inner"></div>
+                </div>
+            </div>
+        </div>
+        <div class="engine eng-big2">
+            <div class="fan">
+                <div class="front">
+                    <div class="fan inner">       </div>
+                </div>
+            </div>
+        </div>
+        <div class="engine eng-small">
+            <div class="fan">
+                <div class="front">
+                    <div class="fan inner"></div>
+                </div>
+            </div>
+        </div>
+        <div class="engine eng-small small2">
+            <div class="fan">
+                <div class="front">
+                    <div class="fan inner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 @section scripts
 {
     <script>
@@ -26,13 +76,13 @@
                     for (var i = 0; i < data.length; i++) {
                         s += '<option value="' + data[i].professionId + '">' + data[i].name + '</option>';
                     }
-                    $("#departmentsDropdown").html(s);
+                    $("#professionDropdown").html(s);
                 }
             });
 
-            $('#submit').on("click",function () {
+            $('#submit').on("click", function () {
                 var name = $("#name").val();
-                var profId = $("#departmentsDropdown").val();
+                var profId = $("#professionDropdown").val();
                 $.ajax({
                     type: "POST",
                     url: "/api/crewmembers",

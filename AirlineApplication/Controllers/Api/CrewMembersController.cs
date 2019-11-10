@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AirlineApplication.Core;
+using AirlineApplication.Core.Services;
 using AirlineApplication.Core.DTOs;
 using AirlineApplication.Core.Models;
 using AutoMapper;
@@ -13,28 +13,24 @@ namespace AirlineApplication.Controllers.Api
 {
     public class CrewMembersController : ApiController
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ICrewMemberService _service;
 
-        public CrewMembersController(IUnitOfWork unitOfWork)
+        public CrewMembersController(ICrewMemberService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
         // GET / api/crewmemebers
         public IEnumerable<CrewMemberDto> GetCrewMembers()
         {
-            return _unitOfWork.CrewMembers.GetAllCrewMembers().Select(Mapper.Map<CrewMember, CrewMemberDto>);
+            return _service.GetCrewMembers();
         }
 
         // GET / api/crewmemebers/1
         [HttpGet]
         public IHttpActionResult GetCrewMember(int crewMemberId)
         {
-            var member = _unitOfWork.CrewMembers.GetCrewMember(crewMemberId);
-            if (member == null)
-                return NotFound();
-
-            return Ok(Mapper.Map<CrewMember, CrewMemberDto>(member));
+            return Ok(_service.GetCrewMember(crewMemberId));
         }
 
         // Post / api/crewmemebers
@@ -45,8 +41,7 @@ namespace AirlineApplication.Controllers.Api
                 return BadRequest();
 
             var member = Mapper.Map<CrewMemberDto, CrewMember>(memberDto);
-            _unitOfWork.CrewMembers.CreateCrewMember(member);
-            _unitOfWork.Complete();
+            _service.CreateCrewMember(member);
 
             memberDto.CrewMemberId = member.CrewMemberId;
             return Created(new Uri(Request.RequestUri + "/" + member.CrewMemberId), memberDto);
@@ -59,23 +54,16 @@ namespace AirlineApplication.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var memberInDb = _unitOfWork.CrewMembers.GetCrewMember(id);
-            if (memberInDb == null)
-                return NotFound();
-
-            Mapper.Map(memberDto, memberInDb);
-
-            _unitOfWork.Complete();
+            _service.UpdateCrewMember(id, memberDto);
 
             return Ok();
         }
 
+        //Delete /api/cremembers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            var member = _unitOfWork.CrewMembers.GetCrewMember(id);
-            member.isNotWorking = true;
-            _unitOfWork.Complete();
+            _service.Delete(id);
 
             return Ok();
         }

@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AirlineApplication.Core.ViewModels.AccountViewModels;
 using AirlineApplication.Core.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using AirlineApplication.Persistence;
 
 namespace AirlineApplication.Controllers
 {
@@ -156,6 +158,7 @@ namespace AirlineApplication.Controllers
                 var result =  UserManager.Create(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "User");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

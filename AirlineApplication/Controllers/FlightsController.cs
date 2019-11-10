@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AirlineApplication.Core.Models;
 using AirlineApplication.Core.ViewModels;
 using AirlineApplication.Core.Services;
+using AirlineApplication.Core.ViewModels.Search;
 
 namespace AirlineApplication.Controllers
 {
@@ -18,12 +19,14 @@ namespace AirlineApplication.Controllers
             _service = service;
         }
 
-        public ActionResult ShowFlights(string query = null)
+        public ActionResult ShowFlights(FlightSearchModel filter = null, string query = null)
         {
             var viewModel = new FlightsViewModel
             {
                 Heading = "All flights",
-                Flights = _service.GetAllFlights()
+                Airports = _service.GetAllAirports(),
+                Statuses = _service.GetAllStatuses(),
+                Flights = _service.GetFilteredFlights(query, filter)
             };
 
             if (User.IsInRole(RoleName.Admin))
@@ -34,10 +37,16 @@ namespace AirlineApplication.Controllers
         [HttpPost]
         public ActionResult Search(FlightsViewModel viewModel)
         {
-            return RedirectToAction("ShowFlights", "Flight", new { query = viewModel.SearchTerm });
+            return RedirectToAction("ShowFlights", "Flights", new { query = viewModel.SearchTerm });
         }
 
-        [Authorize(Roles = RoleName.Admin)]
+        [HttpPost]
+        public ActionResult Filter(FlightsViewModel viewModel)
+        {
+            return RedirectToAction("ShowFlights", "Flights", new { @filter = viewModel.Filter});
+        }
+
+        [Authorize(Roles ="Admin")]
         public ActionResult CreateFlight()
         {
             var viewModel = new FlightViewModel
@@ -50,7 +59,7 @@ namespace AirlineApplication.Controllers
             return View("FlightForm", viewModel);
         }
 
-        [Authorize(Roles = RoleName.Admin)]
+        [Authorize(Roles = "Admin")]
         public ActionResult UpdateFlight(int id)
         {
             var flight = _service.GetFlight(id);
@@ -73,8 +82,8 @@ namespace AirlineApplication.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleName.Admin)]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateFlight(FlightViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -90,8 +99,8 @@ namespace AirlineApplication.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleName.Admin)]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult UpdateFlight(FlightViewModel viewModel)
         {
             if (!ModelState.IsValid)

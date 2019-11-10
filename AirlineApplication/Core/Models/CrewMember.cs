@@ -15,8 +15,8 @@ namespace AirlineApplication.Core.Models
 
         public bool isNotWorking { get; set; }
 
-        public virtual Profession Profession { get; set; }
+        public Profession Profession { get; set; }
 
-        public virtual ICollection<Crew> Flights { get; set; }
+        public ICollection<Crew> Flights { get; set; }
     }
 }

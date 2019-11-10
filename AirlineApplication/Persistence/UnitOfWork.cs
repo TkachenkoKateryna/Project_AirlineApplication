@@ -17,6 +17,7 @@ namespace AirlineApplication.Persistence
         private IAirportRepository _airportRepository;
         private IProfessionRepository _professionRepository;
         private IFlightStatusRepository _flightStatusRepository;
+        private INotificationRepository _notificationRepository;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -38,6 +39,9 @@ namespace AirlineApplication.Persistence
 
         public IFlightStatusRepository Statuses =>
         _flightStatusRepository ?? (_flightStatusRepository = new FlightStatusRepository(_context));
+
+        public INotificationRepository Notifications =>
+        _notificationRepository ?? (_notificationRepository = new NotificationRepository(_context));
 
         public void Complete()
         {

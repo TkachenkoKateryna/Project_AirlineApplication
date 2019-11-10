@@ -4,26 +4,24 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AirlineApplication.Persistence;
+using AirlineApplication.Core.Services;
 
 namespace AirlineApplication.Controllers.Api
 { 
 
     public class FlightsController : ApiController
     {
-        private ApplicationDbContext _context;
+        private readonly IFlightService _service;
 
-        public FlightsController()
+        public FlightsController(IFlightService service)
         {
-            _context = new ApplicationDbContext();
+            _service = service;
         }
 
         [HttpDelete]
         public IHttpActionResult Cancel(int id)
         {
-            var flight = _context.Flights.Single(f => f.FlightId == id);
-            flight.IsDeleted = true;
-            _context.SaveChanges();
+            _service.DeleteFlight(id);
 
             return Ok();
         }

@@ -11,9 +11,8 @@ namespace AirlineApplication.Core.Services
     public interface ICrewService : IDisposable
     {
         IEnumerable<CrewsViewModel> GetCrews();
-        void CreateCrew(int id, string code);
-        void UpdateCrew(int id);
         IEnumerable<CrewMember> GetCrewMembers();
+        IEnumerable<CrewMember> GetFreeCrewMembers(int id, string date);
         void CreateCrew(CrewViewModel viewModel);
         CrewViewModel FormCrew(int id, CrewViewModel viewModel);
         void UpdateCrew(CrewViewModel viewModel);

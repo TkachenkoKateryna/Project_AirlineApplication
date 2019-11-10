@@ -6,42 +6,94 @@
 
 <h2>ShowAllCrews</h2>
 
-<table class="table table-bordered">
+<table  id="crews" class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">Flight Id</th>
             <th scope="col">Flight Code</th>
+            <th scope="col">Date</th>
             <th scope="col">Captain</th>
             <th scope="col">First Pilot</th>
             <th scope="col">Navigator</th>
             <th scope="col">Radio Operator</th>
             <th scope="col">Main Flight Attendant</th>
             <th scope="col">Flight Attendant</th>
+            <th scope="col">Modify</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var crew in Model)
+        @*@foreach (var crew in Model)
         {
-        <tr>
-            <td>@crew.CrewId</td>
-            <td>@crew.FlightCode</td>
-            <td>@crew.Captain</td>
-            <td>@crew.FirstPilot</td>
-            <td>@crew.Navigator</td>
-            <td>@crew.RadioOperator</td>
-            <td>@crew.MainFlightAttendant</td>
-            <td>@crew.FligthAttendant</td>
-            <td class="actions">
-                @if (crew.Empty == true)
-                {
-                    <a href="@Url.Action("CreateCrew", "Dispatcher", new { id = crew.CrewId, code = crew.FlightCode})">Create</a>
-                }
-                else
-                {
-                    <a href="@Url.Action("UpdateCrew", "Dispatcher", new { id = crew.CrewId})">Edit</a>
-                }
-            </td>
-        </tr>
+            <tr>
+                <td>@crew.FlightCode</td>
+                <td>@crew.Date</td>
+                <td>@crew.Captain</td>
+                <td>@crew.FirstPilot</td>
+                <td>@crew.Navigator</td>
+                <td>@crew.RadioOperator</td>
+                <td>@crew.MainFlightAttendant</td>
+                <td>@crew.FligthAttendant</td>*@
+                @*<td>
+                    @if (crew.Empty == true)
+                    {
+                        <a href="@Url.Action("CreateCrew", "Dispatcher", new { id = crew.CrewId, code = crew.FlightCode, date = crew.Date})">Create</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("UpdateCrew", "Dispatcher", new { id = crew.CrewId, date = crew.Date})">Edit</a>
+                    }
+                </td>*@
+            @*</tr>*@
         }
     </tbody>
 </table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#crews").DataTable({
+                ajax: {
+                    url: "/api/crews",
+                    dataSrc: "",
+                },
+                columns: [
+                    {
+                        data: "flightCode",
+                    },
+                    {
+                        data: "date"
+                    },
+                    {
+                        data: "captain"
+                    },
+                    {
+                        data: "firstPilot"
+                    },
+                    {
+                        data: "navigator"
+                    },
+                    {
+                        data: "radioOperator"
+                    },
+                    {
+                        data: "mainFlightAttendant"
+                    },
+                    {
+                        data: "fligthAttendant"
+                    },
+                    {
+                        data: 'empty',
+                        render: function(data, type, crew){
+                            if (data) {
+                                return "<a href='http://localhost:57475/Dispatcher/CreateCrew?id="+crew.crewId+"&code="+crew.flightCode+"&date="+crew.date+"'>Create</a>";
+                            }
+                            else {
+                                 return "<a href='http://localhost:57475/Dispatcher/UpdateCrew?id="+crew.crewId+ "&date="+crew.date+"'>Edit</a>";
+                           }
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

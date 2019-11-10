@@ -1,5 +1,6 @@
 ﻿@model AirlineApplication.Core.ViewModels.CrewViewModel
-
+@using Microsoft.AspNet.Identity;
+@using AirlineApplication.Core.Models;
 @{
     ViewBag.Title = "View";
 }
@@ -11,7 +12,7 @@
     <p class="alert alert-info">All fireld are <strong>required</strong>.</p>
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.FlightId);
-    @Html.TextBoxFor(m=>m.FlightCode, new { @value = Model.FlightCode, @readonly = true})
+    @Html.TextBoxFor(m => m.FlightCode, new { @value = Model.FlightCode, @readonly = true })
     <div class="form-group">
         @Html.LabelFor(m => m.Captain)
         @Html.DropDownListFor(m => m.Captain, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 1), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
@@ -42,7 +43,62 @@
         @Html.DropDownListFor(m => m.FligthAttendant, new SelectList(Model.CrewMembers.Where(m => m.ProfessionId == 6), "CrewMemberId", "FullName"), "", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.FligthAttendant)
     </div>
-    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+    <button type="submit" class="btn btn-primary btn-lg btn-success">Save</button>
+    <button type="button" data-toggle="modal" data-target="#myModal" id="error" class="btn btn-light">Error</button>
 }
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="disc" type="text" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="send" class="btn btn-link">Send a notification to admin</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#submit').on("click", function () {
+                $("#myModal").modal();
+            });
 
+            $('#send').on("click", function () {
+                var text = $("#disc").val();
+                $.ajax({
+                    type: "POST",
+                    url: `/api/notifications/`,
+                    data: {
+                        'userId': '@User.Identity.GetUserId()',
+                        'description': text,
+                        'dateTime': '@DateTime.Now',
+                        'isCompleted': false,
+                        'isResolved': false,
+                        'type': 1,
+                        'userdto': {
+                            'id': '@User.Identity.GetUserId()',
+                            'email' : '@User.Identity.GetUserName()'
+                        }
+                    },
+                    success: function () {
+                        alert('Send');
+                    }
+                });
+            });
+        });
+
+    </script>
+}

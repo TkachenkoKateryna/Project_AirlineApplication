@@ -10,6 +10,7 @@ namespace AirlineApplication.Core
         ICrewRepository CrewMembers { get; }
         IProfessionRepository Professions { get; }
         IFlightStatusRepository Statuses { get; }
+        INotificationRepository Notifications { get; }
         void Complete();
     }
 }

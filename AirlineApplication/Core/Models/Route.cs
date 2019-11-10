@@ -13,9 +13,9 @@ namespace AirlineApplication.Core.Models
 
         public int AirportId { get; set; }
 
-        public virtual Flight Flight { get; set; }
+        public  Flight Flight { get; set; }
 
-        public virtual Airport Airport { get; set; }
+        public  Airport Airport { get; set; }
 
         public bool DestinationPoint { get; set; }
 

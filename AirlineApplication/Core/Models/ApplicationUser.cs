@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,7 +17,7 @@ namespace AirlineApplication.Core.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
-            Notifications = new List<Notification>();
+            Notifications = new Collection<Notification>();
 
             return userIdentity;
         }

@@ -4,93 +4,122 @@
     ViewBag.Title = Model.Heading;
 }
 
-<h1>@Model.Heading</h1>
-
-@using (Html.BeginForm("Search", "Flight"))
-{
-    <div class="form-group">
-        <div id="searchFlights" class="input-group" style="width:300px">
-            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control" })
-            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-search"></i>
-            </span>
+<div id="filterBar" class="sidenav">
+    @using (Html.BeginForm("ShowFlights", "Flights"))
+    {
+        <div class="cd-filter-block">
+            @Html.LabelFor(m => m.Filter.Departing)
+            @Html.DropDownListFor(m => m.Filter.Departing, new SelectList(Model.Airports, "AirportId", "Name", "City"), "", new { @class = "form-control", id = "departure" })
+            @Html.ValidationMessageFor(m => m.Filter.Departing)
         </div>
-    </div>
-}
 
-<table id="ex" class="table table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Code</th>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
-            <th scope="col">Status</th>
-            <th scope="col">Departing</th>
-            <th scope="col">Landing</th>
-            <th scope="col">Delete</th>
-        </tr>
-    </thead>
-    <tbody class="searchtable">
-        @foreach (var flight in Model.Flights)
-        {
+        <div class="cd-filter-block">
+            @Html.LabelFor(m => m.Filter.Landing)
+            @Html.DropDownListFor(m => m.Filter.Landing, new SelectList(Model.Airports, "AirportId", "Name"), "", new { @class = "form-control", id = "landing" })
+            @Html.ValidationMessageFor(m => m.Filter.Landing)
+        </div>
+        <div class="cd-filter-block">
+            @Html.LabelFor(m => m.Filter.FlightStatus)
+            @Html.DropDownListFor(m => m.Filter.FlightStatus, new SelectList(Model.Statuses, "StatusId", "Description"), "", new { @class = "form-control", id = "status" })
+            @Html.ValidationMessageFor(m => m.Filter.FlightStatus)
+        </div>
+        <div class="cd-filter-block">
+            @Html.LabelFor(m => m.Filter.Date)
+            <div class='input-group date' id='datetimepicker1' style="width:200px">
+                @Html.TextBoxFor(m => m.Filter.Date, new { @id = "date" })
+                <span class="input-group-addon" id="date">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <span>
+            <button class="btn btn-link btn-sm" id="discard">Discard</button>
+        </span>
+        <button type="submit" class="btn btn-primary btn-lg">Filter</button>
+    }
+
+</div>
+<div id="main">
+
+    <h1>@Model.Heading</h1>
+
+    <span style="font-size:30px;cursor:pointer" id="open">&#9776; Filters</span>
+
+    @using (Html.BeginForm("ShowFlights", "Flights"))
+    {
+        <div class="form-group">
+            <div id="searchFlights" class="input-group" style="width:300px">
+                @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control" })
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
+            </div>
+        </div>
+    }
+
+    <table id="ex" class="table table-bordered">
+        <thead class="info">
             <tr>
-                <td>@Html.ActionLink(flight.Code, "UpdateFlight", "Flight", new { id = flight.FlightId }, null)</td>
-                <td>@flight.Date.Date</td>
-                <td>@flight.Date.TimeOfDay</td>
-                <td>@flight.FlightStatus.Value</td>
-                @foreach (var ar in @flight.Airports)
-                {
-                    <td>@ar.Airport.Name</td>
-                }
-                <td>
-                    <a href="#" class="js-delete-flight" data-flight-id="@flight.FlightId">
-                        Delete
-                    </a>
-                </td>
+                <th  id="js-code-header" style="width:100px">
+                            Code
+                        <i class="fa fa-fw fa-sort" ></i>
+                </th>
+                <th id="js-date-header">
+                    Date
+                    <i class="fa fa-fw fa-sort" ></i>
+                </th>
+                <th>
+                    Time
+                    <i class="fa fa-fw fa-sort"></i>
+                </th>
+                <th  style="width:100px">
+                    Status
+                    <i class="fa fa-fw fa-sort"></i>
+                </th>
+                <th  id="js-dep-header">
+                    Departing
+                    <i class="fa fa-fw fa-sort"></i>
+                </th>
+                <th >
+                    Landing
+                    <i class="fa fa-fw fa-sort"></i>
+                </th>
+                <th >Delete</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody class="searchtable">
+            @foreach (var flight in Model.Flights)
+            {
+                <tr>
+                    <td>
+                    @Html.ActionLink(flight.Code, "UpdateFlight", "Flights", new { id = flight.FlightId }, null)
+                    </td>
+                    <td>@flight.Date.Date</td>
+                    <td>@flight.Date.TimeOfDay</td>
+                    <td>@flight.FlightStatus.Value</td>
+                    @foreach (var ar in @flight.Airports)
+                    {
+                        <td>@ar.Airport.Name</td>
+                    }
+                    <td>
+                        <a href="#" class="js-delete-flight" data-flight-id="@flight.FlightId">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-@section scripts
-{
+@section scripts{
     <script>
         $(document).ready(function () {
-            $(".js-delete-flight").click(function (e) {
-                var link = $(e.target);
-                bootbox.dialog({
-                    title: "Confirm",
-                    message: "<p>Are you sure you want delete this flight</p>",
-                    size: 'large',
-                    buttons: {
-                        no: {
-                            label: "No",
-                            className: 'btn-default',
-                            callback: function () {
-                                bootbox.hideAll();
-                            }
-                        },
-                        yes: {
-                            label: "Yes",
-                            className: 'btn-danger',
-                            callback: function () {
-                                $.ajax({
-                                    url: `/api/flights/${link.attr('data-flight-id')}`,
-                                    method: "DELETE"
-                                })
-                                    .done(function () {
-                                        link.parents("tr").fadeOut(function () {
-                                            $(this).remove();
-                                        });
-                                    })
-                                    .fail(function (xhr, status, error) {
-                                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
-                                    });
-                            }
-                        },
-                    }
-                });
-            });
+            filter.datetimepicker();
+            filter.discard();
+            filter.moveSidebar();
+
+            GigsController.cancel();
         });
     </script>
 }

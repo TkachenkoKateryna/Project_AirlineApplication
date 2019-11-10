@@ -8,8 +8,16 @@ namespace AirlineApplication.Core.ViewModels
 {
     public class FlightsViewModel
     {
-        public IEnumerable<Flight> Flights {get;set;}
+        public IEnumerable<Flight> Flights { get; set; }
+
+        public IEnumerable<Airport> Airports { get; set; }
+ 
+        public IEnumerable<FlightStatus> Statuses { get; set; }
+
         public string Heading { get; set; }
+
+        public FlightSearchModel Filter { get; set; }
+
         public string SearchTerm { get; set; }
     }
 }

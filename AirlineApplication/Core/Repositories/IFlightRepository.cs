@@ -6,10 +6,17 @@ namespace AirlineApplication.Core.Repositories
     public interface IFlightRepository
     {
         IEnumerable<Flight> GetAllFlights();
+
         Flight GetFlight(int id);
+
         void AddFlight(Flight flight);
+
         void AddFlightRoutes(int flightId,int depId, int landId);
+
+        bool ExistsFlightWithCode(string code);
+
         IEnumerable<Route> FindRoute(int flightId);
+
         IEnumerable<Crew> FindCrew(int flightId);
     }
 }
