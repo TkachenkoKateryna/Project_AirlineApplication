@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AirlineApplication.Core.Services;
 using AirlineApplication.Core.ViewModels;
 using AirlineApplication.Core.Models;
+using AirlineApplication.Core.DTOs;
 
 namespace AirlineApplication.Controllers
 {
@@ -24,6 +25,7 @@ namespace AirlineApplication.Controllers
             return View();
         }
 
+
         public ActionResult EditMember(int id)
         {
             var member = _crewMemberService.GetCrewMember(id);
@@ -32,7 +34,7 @@ namespace AirlineApplication.Controllers
             {
                 CrewMemberId = id,
                 FullName = member.FullName,
-                ProfessionId = member.ProfessionId
+                ProfessionId = member.ProfessionId,
             };
             return View("UpdateMember", viewModel);
         }

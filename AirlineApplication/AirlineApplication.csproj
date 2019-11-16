@@ -235,6 +235,7 @@
     <Compile Include="Controllers\Api\CrewMembersController.cs" />
     <Compile Include="Controllers\Api\FlightsController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\PassengerController.cs" />
     <Compile Include="Core\DTOs\NotificationDto.cs" />
     <Compile Include="Controllers\Api\ProfessionController.cs" />
     <Compile Include="Controllers\CrewMembersController.cs" />
@@ -247,7 +248,9 @@
     <Compile Include="Core\DTOs\ProfessionDto.cs" />
     <Compile Include="Core\DTOs\UserDto.cs" />
     <Compile Include="Core\ModelState\ValidationException.cs" />
+    <Compile Include="Core\Models\Passenger.cs" />
     <Compile Include="Core\Repositories\INotificationRepository.cs" />
+    <Compile Include="Core\Repositories\IPassengerRepository.cs" />
     <Compile Include="Core\Services\ICrewMemberService.cs" />
     <Compile Include="Core\Services\ICrewService.cs" />
     <Compile Include="Core\Services\IFlightService.cs" />
@@ -257,6 +260,7 @@
     <Compile Include="Core\Repositories\IFlightStatusRepository.cs" />
     <Compile Include="Core\Repositories\IProfessionRepository.cs" />
     <Compile Include="Core\Services\INotificationService.cs" />
+    <Compile Include="Core\Services\IPassengerService.cs" />
     <Compile Include="Core\Services\IProfessionService.cs" />
     <Compile Include="Core\ViewModels\CrewMemberViewModel.cs" />
     <Compile Include="Core\ViewModels\FlightsViewModel.cs" />
@@ -269,6 +273,7 @@
     <Compile Include="Core\ViewModels\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\FlightSearchModel.cs" />
     <Compile Include="Core\ViewModels\NotificationViewModel.cs" />
+    <Compile Include="Core\ViewModels\PassangerRegistrationViewModel.cs" />
     <Compile Include="Core\ViewModels\UserViewModel.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
@@ -287,7 +292,16 @@
     <Compile Include="Persistence\Migrations\201911081748542_PopulateUserRoles.Designer.cs">
       <DependentUpon>201911081748542_PopulateUserRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201911110907588_AddPassenger.cs" />
+    <Compile Include="Persistence\Migrations\201911110907588_AddPassenger.Designer.cs">
+      <DependentUpon>201911110907588_AddPassenger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201911110929570_AddPassenger1.cs" />
+    <Compile Include="Persistence\Migrations\201911110929570_AddPassenger1.Designer.cs">
+      <DependentUpon>201911110929570_AddPassenger1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Repositories\NotificationRepository.cs" />
+    <Compile Include="Persistence\Repositories\PassengerRepository.cs" />
     <Compile Include="Persistence\Services\CrewMemberService.cs" />
     <Compile Include="Persistence\Services\CrewService.cs" />
     <Compile Include="Persistence\Services\FlightService.cs" />
@@ -353,6 +367,7 @@
     <Compile Include="Persistence\Repositories\FlightStatusRepository.cs" />
     <Compile Include="Persistence\Repositories\ProfessionRepository.cs" />
     <Compile Include="Persistence\Services\NotificationService.cs" />
+    <Compile Include="Persistence\Services\PassengerService.cs" />
     <Compile Include="Persistence\Services\ProfessionService.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -802,6 +817,9 @@
     <Content Include="Views\CrewMembers\UpdateMember.cshtml" />
     <Content Include="Views\Flights\ReadOnlyFlightsList.cshtml" />
     <Content Include="Views\Notifications\ShowNotifications.cshtml" />
+    <Content Include="Views\Shared\FlightError.cshtml" />
+    <Content Include="Views\Passenger\RegistrationSuccess.cshtml" />
+    <Content Include="Views\Passenger\ShowUserFlights.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -859,6 +877,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201911081748542_PopulateUserRoles.resx">
       <DependentUpon>201911081748542_PopulateUserRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201911110907588_AddPassenger.resx">
+      <DependentUpon>201911110907588_AddPassenger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201911110929570_AddPassenger1.resx">
+      <DependentUpon>201911110929570_AddPassenger1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

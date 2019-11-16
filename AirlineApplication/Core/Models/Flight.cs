@@ -22,5 +22,7 @@ namespace AirlineApplication.Core.Models
         public  ICollection<Route> Airports { get; set; }
 
         public  ICollection<Crew> CrewMembers { get; set; }
+
+        public ICollection <Passenger> Passengers { get; set; }
     }
 }

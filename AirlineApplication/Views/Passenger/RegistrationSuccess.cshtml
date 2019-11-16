@@ -1,0 +1,15 @@
+﻿@model AirlineApplication.Core.ViewModels.PassangerRegistrationViewModel
+
+@{
+    ViewBag.Title = "RegistrationSuccess";
+}
+
+<h1>Dear, @Model.UserId</h1>
+<h2>You have successfully registered on flight @Model.FlightCode</h2>
+
+<h1>Details</h1>
+<h3><strong>From:</strong>@Model.Departure</h3>
+<h3><strong>To:</strong>@Model.Landing</h3>
+<h3><strong>On:</strong>@Model.Date</h3>
+<h3><strong>At:</strong>@Model.Time</h3>
+

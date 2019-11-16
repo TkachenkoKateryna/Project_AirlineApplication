@@ -14,6 +14,8 @@ namespace AirlineApplication.Core.ViewModels
  
         public IEnumerable<FlightStatus> Statuses { get; set; }
 
+        public string UserId { get; set; }
+
         public string Heading { get; set; }
 
         public FlightSearchModel Filter { get; set; }

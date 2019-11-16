@@ -17,6 +17,8 @@ namespace AirlineApplication.Core
 
         INotificationRepository Notifications { get; }
 
+        IPassengerRepository Passengers { get; } 
+
         void Complete();
     }
 }

@@ -28,7 +28,7 @@ namespace AirlineApplication.Persistence.Repositories
         {
             return _context.Flights.Include(st => st.FlightStatus)
                  .Include(m => m.CrewMembers.Select(y => y.CrewMember.Profession))
-                 .Include(a => a.Airports)
+                 .Include(a => a.Airports.Select(y => y.Airport))
                  .SingleOrDefault(f => f.FlightId == id);
         }
 

@@ -11,11 +11,15 @@ namespace AirlineApplication.Core.Models
     {
         public ICollection<Notification> Notifications { get; set; }
 
+        public ICollection<Flight> Flights { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             Notifications = new Collection<Notification>();
+
+            Flights = new Collection<Flight>();
 
             return userIdentity;
         }

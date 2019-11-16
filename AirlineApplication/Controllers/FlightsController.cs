@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AirlineApplication.Core.Models;
 using AirlineApplication.Core.ViewModels;
 using AirlineApplication.Core.Services;
+using Microsoft.AspNet.Identity;
 
 namespace AirlineApplication.Controllers
 {
@@ -18,6 +19,7 @@ namespace AirlineApplication.Controllers
             _service = service;
         }
 
+     
         public ActionResult ShowFlights(string sortOrder, FlightSearchModel filter = null, string query = null)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";

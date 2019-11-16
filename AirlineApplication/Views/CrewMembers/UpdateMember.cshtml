@@ -66,7 +66,7 @@
 
 @section scripts
 {
-    <script>
+<script>
         $(document).ready(function () {
 
             $.ajax({
@@ -78,7 +78,7 @@
                     for (var i = 0; i < data.length; i++) {
                          s += '<option value="' + data[i].professionId + '">' + data[i].name + '</option>';
                     }
-                 
+
                     $("#name").val("@Model.FullName");
                     $("#professionDropdown").html(s);
                     $("#professionDropdown").get(0).selectedIndex = @Model.ProfessionId-1;
@@ -87,13 +87,15 @@
 
             $('#submit').on("click",function () {
                 var name = $("#name").val();
+                var profId =  @Model.ProfessionId;
+                var id = @Model.CrewMemberId;
                 $.ajax({
                     type: "PUT",
-                    url: "/api/crewmembers/" + @Model.CrewMemberId,
+                    url: "/api/crewmembers/" + id,
                     data: {
-                        'crewMemberId': @Model.CrewMemberId,
+                        'crewMemberId': id,
                         'fullName': name,
-                        'professionId': @Model.ProfessionId
+                        'professionId': profId
                     },
                     success: function () {
                         location.href = "http://localhost:57475/CrewMembers/ShowMembers"
@@ -102,5 +104,5 @@
                 return false;
             });
         });
-    </script>
+</script>
 }

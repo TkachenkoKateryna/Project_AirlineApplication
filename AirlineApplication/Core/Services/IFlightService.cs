@@ -26,5 +26,6 @@ namespace AirlineApplication.Core.Services
         IEnumerable<FlightStatus> GetAllStatuses();
 
         IEnumerable<Flight> SortFlight(IEnumerable<Flight> flights, string sortOrder);
+
     }
 }

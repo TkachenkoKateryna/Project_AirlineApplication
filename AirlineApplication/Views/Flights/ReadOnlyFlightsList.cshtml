@@ -86,6 +86,12 @@
                 <th>
                     Landing
                 </th>
+                @if (User.IsInRole("User"))
+                {
+                    <th>
+                        Register
+                    </th>
+                }
             </tr>
         </thead>
         <tbody class="searchtable">
@@ -95,10 +101,16 @@
                     <td>@flight.Code</td>
                     <td>@flight.Date.ToShortDateString()</td>
                     <td>@flight.Date.TimeOfDay</td>
-                    <td>@flight.FlightStatus.Value</td>
+                    <td>@flight.FlightStatus.Description</td>
                     @foreach (var ar in @flight.Airports)
                     {
                         <td>@ar.Airport.Name</td>
+                    }
+                    @if (User.IsInRole("User"))
+                    {
+                        <td>
+                            @Html.ActionLink("Register", "Register", "Passenger", new { id = flight.FlightId }, null)
+                        </td>
                     }
                 </tr>
             }

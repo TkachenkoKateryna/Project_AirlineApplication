@@ -15,6 +15,7 @@ namespace AirlineApplication.Persistence
         public DbSet<Route> Routes { get; set; }
         public DbSet<Crew> Crew { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Passenger> Passengers { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

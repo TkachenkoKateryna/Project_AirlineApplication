@@ -1,0 +1,27 @@
+﻿@model IEnumerable<AirlineApplication.Core.Models.Passenger>
+@{
+    ViewBag.Title = "ShowUserFlights";
+}
+
+<h2>Your Flights</h2>
+
+<ul class="notifications" voffset>
+    @foreach (var not in Model)
+    {
+        <li>
+            <div class="date">
+                <div class="month">
+                    @not.Flight.Date.ToString("MMM");
+                </div>
+                <div class="day">
+                    @not.Flight.Date.Day
+                </div>
+            </div>
+            <div class="details">
+                <p>Details</p>
+                <p><strong>Flight:</strong>@not.Flight.Code</p>
+                <p>Ypu are succesfully registrated</p>
+            </div>
+        </li>
+    }
+</ul>

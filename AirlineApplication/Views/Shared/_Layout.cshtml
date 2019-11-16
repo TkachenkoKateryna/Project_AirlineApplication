@@ -30,6 +30,12 @@
                                 <li>@Html.ActionLink("Create a Flight", "CreateFlight", "Flights")</li>
                             }
                             <li>@Html.ActionLink("Show Flights", "ShowFlights", "Flights")</li>
+                            @if (User.IsInRole("User"))
+                            {
+                            <li>
+                                @Html.ActionLink("Show My Flights ", "ShowUserFlights", "Passenger")
+                            </li>
+                            }
                         </ul>
                     </li>
                     @if (User.IsInRole("Admin"))
